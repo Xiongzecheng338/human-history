@@ -1,0 +1,1396 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>人类文明演进史 - 完整沉浸版</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+tailwind.config = {
+  theme: {
+    extend: {
+      colors: {
+        prehistoric: { light: '#8B7355', DEFAULT: '#5D4E37', dark: '#3D2E17' },
+        ancient: { light: '#D4AF37', DEFAULT: '#B8860B', dark: '#8B6914' },
+        classical: { light: '#E8DCC4', DEFAULT: '#C9B896', dark: '#A69070' },
+        medieval: { light: '#4A5568', DEFAULT: '#2D3748', dark: '#1A202C' },
+        renaissance: { light: '#F5E6D3', DEFAULT: '#D4A574', dark: '#B8956E' },
+        industrial: { light: '#94A3B8', DEFAULT: '#64748B', dark: '#475569' },
+        modern: { light: '#60A5FA', DEFAULT: '#3B82F6', dark: '#1D4ED8' },
+        contemporary: { light: '#A78BFA', DEFAULT: '#8B5CF6', dark: '#6D28D9' }
+      },
+      fontFamily: {
+        display: ['Cinzel', 'serif'],
+        body: ['Noto Sans SC', 'sans-serif']
+      },
+      animation: {
+        'float': 'float 6s ease-in-out infinite',
+        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+        'scan': 'scan 8s linear infinite',
+        'glow': 'glow 2s ease-in-out infinite alternate',
+      },
+      keyframes: {
+        float: {
+          '0%, 100%': { transform: 'translateY(0)' },
+          '50%': { transform: 'translateY(-20px)' },
+        },
+        scan: {
+          '0%': { top: '-5%' },
+          '100%': { top: '105%' },
+        },
+        glow: {
+          'from': { boxShadow: '0 0 5px #fff, 0 0 10px #fff, 0 0 15px #0ff, 0 0 20px #0ff' },
+          'to': { boxShadow: '0 0 10px #fff, 0 0 20px #ff0, 0 0 30px #ff0, 0 0 40px #ff0' },
+        }
+      }
+    }
+  }
+}
+</script>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { font-family: 'Noto Sans SC', sans-serif; overflow-x: hidden; }
+
+/* === 动态背景画布 === */
+#bgCanvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  opacity: 0.6;
+}
+
+/* === 时代背景图案 (SVG) === */
+.era-prehistoric {
+  background-color: #1a0f00;
+  background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 0 L30 60 M0 30 L60 30' stroke='%234a3728' stroke-width='1' opacity='0.2'/%3E%3Ccircle cx='15' cy='15' r='2' fill='%234a3728' opacity='0.1'/%3E%3C/svg%3E");
+}
+.era-ancient {
+  background-color: #0d0900;
+  background-image: url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 40 Q20 20 40 40 T80 40' stroke='%23b8860b' stroke-width='2' fill='none' opacity='0.1'/%3E%3Cpath d='M20 0 L20 80 M60 0 L60 80' stroke='%23b8860b' stroke-width='1' opacity='0.05'/%3E%3C/svg%3E");
+}
+.era-classical {
+  background-color: #0a1628;
+  background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M10 10 L90 10 L90 90 L10 90 Z' stroke='%23c9b896' stroke-width='2' fill='none' opacity='0.05'/%3E%3Ccircle cx='50' cy='50' r='30' stroke='%23c9b896' stroke-width='1' fill='none' opacity='0.05'/%3E%3C/svg%3E");
+}
+.era-medieval {
+  background-color: #0a0a0f;
+  background-image: url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 0 L40 40 M40 0 L0 40' stroke='%234a5568' stroke-width='2' opacity='0.1'/%3E%3C/svg%3E");
+}
+.era-renaissance {
+  background-color: #1a0f05;
+  background-image: url("data:image/svg+xml,%3Csvg width='120' height='120' viewBox='0 0 120 120' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='60' cy='60' r='50' stroke='%23d4a574' stroke-width='1' fill='none' opacity='0.05'/%3E%3Cpath d='M60 10 L60 110 M10 60 L110 60' stroke='%23d4a574' stroke-width='1' opacity='0.05'/%3E%3C/svg%3E");
+}
+.era-industrial {
+  background-color: #020617;
+  background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 50 H100 M50 0 V100' stroke='%2364748b' stroke-width='1' stroke-dasharray='5,5' opacity='0.1'/%3E%3Ccircle cx='25' cy='25' r='10' stroke='%2364748b' stroke-width='1' fill='none' opacity='0.1'/%3E%3Ccircle cx='75' cy='75' r='10' stroke='%2364748b' stroke-width='1' fill='none' opacity='0.1'/%3E%3C/svg%3E");
+}
+.era-modern {
+  background-color: #000510;
+  background-image: linear-gradient(rgba(59, 130, 246, 0.03) 1px, transparent 1px),
+  linear-gradient(90deg, rgba(59, 130, 246, 0.03) 1px, transparent 1px);
+  background-size: 50px 50px;
+}
+.era-contemporary {
+  background-color: #0a0a1a;
+  background-image: linear-gradient(0deg, transparent 24%, rgba(139, 92, 246, .05) 25%, rgba(139, 92, 246, .05) 26%, transparent 27%, transparent 74%, rgba(139, 92, 246, .05) 75%, rgba(139, 92, 246, .05) 76%, transparent 77%, transparent),
+  linear-gradient(90deg, transparent 24%, rgba(139, 92, 246, .05) 25%, rgba(139, 92, 246, .05) 26%, transparent 27%, transparent 74%, rgba(139, 92, 246, .05) 75%, rgba(139, 92, 246, .05) 76%, transparent 77%, transparent);
+  background-size:50px 50px;
+}
+
+/* === 时间线轴样式 === */
+.timeline-line {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 4px;
+  height: 100%;
+  background: linear-gradient(to bottom, 
+    #5D4E37 0%, #B8860B 15%, #C9B896 30%, #2D3748 45%, 
+    #D4A574 60%, #64748B 75%, #3B82F6 90%, #8B5CF6 100%
+  );
+  box-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
+  z-index: 1;
+}
+
+/* 移动端时间线 */
+@media (max-width: 768px) {
+  .timeline-line {
+    left: 20px;
+  }
+}
+
+/* === 玻璃态卡片 === */
+.glass-card {
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.glass-card:hover {
+  transform: translateY(-5px) scale(1.02);
+  border-color: rgba(255, 255, 255, 0.3);
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6);
+}
+
+/* === 动画定义 === */
+@keyframes float {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-15px) rotate(2deg); }
+}
+
+@keyframes pulse-glow {
+  0% { box-shadow: 0 0 5px currentColor; }
+  50% { box-shadow: 0 0 20px currentColor, 0 0 30px currentColor; }
+  100% { box-shadow: 0 0 5px currentColor; }
+}
+
+/* === 徽章样式 === */
+.badge {
+  font-size: 0.65rem;
+  padding: 3px 10px;
+  border-radius: 20px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  display: inline-block;
+  margin-bottom: 8px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+.badge-tech { background: linear-gradient(135deg, #00CED1, #20B2AA); color: #fff; }
+.badge-science { background: linear-gradient(135deg, #9F7AEA, #805AD5); color: #fff; }
+.badge-first { background: linear-gradient(135deg, #FFD700, #FFA500); color: #1a1a1a; }
+.badge-culture { background: linear-gradient(135deg, #48BB78, #38A169); color: #fff; }
+.badge-person { background: linear-gradient(135deg, #F56565, #E53E3E); color: #fff; }
+.badge-war { background: linear-gradient(135deg, #718096, #4A5568); color: #fff; }
+
+/* === 滚动条 === */
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: #111; }
+::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.4); }
+
+/* === 工具提示 === */
+.tooltip {
+  position: relative;
+}
+.tooltip::after {
+  content: attr(data-tip);
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(0,0,0,0.9);
+  color: white;
+  padding: 5px 10px;
+  border-radius: 4px;
+  font-size: 12px;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s;
+}
+.tooltip:hover::after {
+  opacity: 1;
+}
+
+/* === 模态框 === */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.9);
+  backdrop-filter: blur(5px);
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s;
+}
+.modal-overlay.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* === 科幻扫描线效果 === */
+.scan-line {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: rgba(0, 255, 255, 0.5);
+  box-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
+  animation: scan 8s linear infinite;
+  pointer-events: none;
+  opacity: 0.3;
+}
+
+/* === 悬浮图标 === */
+.floating-icon {
+  position: absolute;
+  opacity: 0.1;
+  animation: float 10s ease-in-out infinite;
+  pointer-events: none;
+}
+</style>
+</head>
+<body class="bg-black text-white">
+
+<!-- 动态背景画布 -->
+<canvas id="bgCanvas"></canvas>
+
+<!-- 导航栏 -->
+<nav class="fixed top-0 left-0 right-0 z-50 bg-black/50 backdrop-blur-md border-b border-white/10">
+  <div class="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
+    <div class="flex items-center gap-3">
+      <button id="backBtn" onclick="goBack()" class="hidden md:flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/10 hover:bg-white/20 transition text-sm">
+        <i class="fas fa-arrow-left"></i>
+        <span>返回</span>
+      </button>
+      <div class="w-10 h-10 rounded-full bg-gradient-to-br from-amber-400 to-orange-600 flex items-center justify-center shadow-lg">
+        <i class="fas fa-hourglass-half text-white"></i>
+      </div>
+      <h1 class="font-display text-lg md:text-xl font-bold tracking-wider hidden sm:block">人类文明史</h1>
+    </div>
+    
+    <div class="flex items-center gap-2">
+      <button onclick="scrollToTop()" class="p-2 rounded-full hover:bg-white/10 transition" title="返回顶部">
+        <i class="fas fa-chevron-up"></i>
+      </button>
+      <button id="menuToggle" class="md:hidden p-2 rounded-full hover:bg-white/10 transition">
+        <i class="fas fa-bars"></i>
+      </button>
+    </div>
+  </div>
+  
+  <!-- 移动端菜单 -->
+  <div id="mobileMenu" class="hidden md:hidden border-t border-white/10 bg-black/80">
+    <div class="p-4 grid grid-cols-2 gap-2">
+      <a href="#prehistoric" class="block px-4 py-2 rounded bg-amber-900/30 text-center">史前</a>
+      <a href="#ancient" class="block px-4 py-2 rounded bg-yellow-900/30 text-center">古代</a>
+      <a href="#classical" class="block px-4 py-2 rounded bg-blue-900/30 text-center">古典</a>
+      <a href="#medieval" class="block px-4 py-2 rounded bg-purple-900/30 text-center">中世纪</a>
+      <a href="#renaissance" class="block px-4 py-2 rounded bg-orange-900/30 text-center">文艺复兴</a>
+      <a href="#industrial" class="block px-4 py-2 rounded bg-gray-800 text-center">工业</a>
+      <a href="#modern" class="block px-4 py-2 rounded bg-blue-900/30 text-center">现代</a>
+      <a href="#contemporary" class="block px-4 py-2 rounded bg-violet-900/30 text-center">当代</a>
+    </div>
+  </div>
+</nav>
+
+<!-- 侧边快速导航 (桌面端) -->
+<div id="sideNav" class="fixed right-4 top-1/2 transform -translate-y-1/2 z-40 hidden md:flex flex-col gap-3 items-center">
+  <!-- 由JS动态生成 -->
+</div>
+
+<!-- 主内容区域 -->
+<main>
+  <!-- 首页/欢迎区域 -->
+  <section id="heroSection" class="min-h-screen flex items-center justify-center relative overflow-hidden">
+    <div class="absolute inset-0 bg-gradient-to-b from-transparent via-black/50 to-black pointer-events-none z-10"></div>
+    
+    <div class="relative z-20 text-center px-4 max-w-4xl mx-auto">
+      <div class="mb-6 animate-pulse">
+        <span class="text-amber-400/80 text-sm tracking-widest uppercase">700万年的人类旅程</span>
+      </div>
+      <h1 class="font-display text-4xl md:text-6xl lg:text-7xl font-bold mb-6 bg-gradient-to-r from-amber-200 via-yellow-400 to-amber-200 text-transparent bg-clip-text">
+        文明的演进
+      </h1>
+      <p class="text-lg md:text-xl text-gray-300 mb-8 font-light leading-relaxed">
+        从第一缕意识之火到数字时代的黎明<br>
+        见证每一个改变世界的瞬间
+      </p>
+      
+      <button onclick="enterTimeline()" class="group relative inline-flex items-center gap-3 bg-gradient-to-r from-amber-500 to-orange-600 text-white px-8 py-4 rounded-full font-semibold text-lg shadow-lg shadow-orange-500/30 hover:shadow-orange-500/50 transition-all hover:scale-105">
+        <span>开启时间之旅</span>
+        <i class="fas fa-arrow-right group-hover:translate-x-1 transition-transform"></i>
+      </button>
+      
+      <div class="mt-16 grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
+        <div class="p-4">
+          <div class="text-3xl font-bold text-amber-400">700万+</div>
+          <div class="text-sm text-gray-500">年历史</div>
+        </div>
+        <div class="p-4">
+          <div class="text-3xl font-bold text-amber-400">8</div>
+          <div class="text-sm text-gray-500">个时代</div>
+        </div>
+        <div class="p-4">
+          <div class="text-3xl font-bold text-amber-400">300+</div>
+          <div class="text-sm text-gray-500">关键事件</div>
+        </div>
+        <div class="p-4">
+          <div class="text-3xl font-bold text-amber-400">∞</div>
+          <div class="text-sm text-gray-500">人类潜能</div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- 向下滚动提示 -->
+    <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 z-20 animate-bounce">
+      <i class="fas fa-chevron-down text-2xl text-white/50"></i>
+    </div>
+  </section>
+
+  <!-- 时间线容器 -->
+  <div id="timelineContainer" class="hidden">
+    <!-- 由JS动态渲染 -->
+  </div>
+</main>
+
+<!-- 详情模态框 -->
+<div id="detailModal" class="modal-overlay">
+  <div class="relative bg-gray-900/95 border border-white/20 rounded-2xl max-w-2xl w-11/12 max-h-[85vh] overflow-y-auto p-6 shadow-2xl">
+    <button onclick="closeModal()" class="absolute top-4 right-4 text-gray-400 hover:text-white text-2xl z-10">
+      <i class="fas fa-times-circle"></i>
+    </button>
+    <div id="modalBody"></div>
+  </div>
+</div>
+
+<script>
+// ==================== 历史数据库 ====================
+const eras = [
+  { id: 'prehistoric', name: '史前时代', period: '约700万年前 - 公元前3000年', color: '#5D4E37', icon: 'fa-fire', desc: '从人猿揖别到文明的曙光' },
+  { id: 'ancient', name: '古代文明', period: '公元前3000年 - 公元前500年', color: '#B8860B', icon: 'fa-ankh', desc: '大河文明的辉煌诞生' },
+  { id: 'classical', name: '古典时代', period: '公元前500年 - 公元500年', color: '#C9B896', icon: 'fa-landmark', desc: '哲学、民主与帝国的黄金时代' },
+  { id: 'medieval', name: '中世纪', period: '公元500年 - 1500年', color: '#2D3748', icon: 'fa-chess-rook', desc: '信仰、骑士与东西方交汇' },
+  { id: 'renaissance', name: '文艺复兴', period: '公元1400年 - 1700年', color: '#D4A574', icon: 'fa-palette', desc: '人文精神的觉醒与科学的萌芽' },
+  { id: 'industrial', name: '工业革命', period: '公元1700年 - 1900年', color: '#64748B', icon: 'fa-industry', desc: '机器轰鸣中的世界重塑' },
+  { id: 'modern', name: '现代', period: '公元1900年 - 2000年', color: '#3B82F6', icon: 'fa-atom', desc: '战争、科技与全球化的世纪' },
+  { id: 'contemporary', name: '当代', period: '公元2000年 - 至今', color: '#8B5CF6', icon: 'fa-microchip', desc: '数字革命与未来的序章' }
+];
+
+const events = [
+  // ===== 史前时代 (扩充) =====
+  { year: '约700万年前', title: '人猿揖别', desc: '人类与黑猩猩的共同祖先在非洲分化，人类家族的故事由此开始。', era: 'prehistoric', type: 'science', badge: '起源', detail: '这是人类进化史上最重要的分水岭。在东非大裂谷的森林与草原交界处，一群灵长类动物因为环境变化被迫走向不同的进化道路。' },
+  { year: '约440万年前', title: '地猿始祖', desc: '地猿始祖种出现，展示了早期人类直立行走的雏形。', era: 'prehistoric', type: 'science', badge: '进化' },
+  { year: '约390万年前', title: '南方古猿', desc: '南方古猿阿法种出现，"露西"成为最著名的早期人类祖先化石。', era: 'prehistoric', type: 'science', badge: '里程碑', detail: '露西的发现证明了直立行走先于大脑发育，彻底改变了人类对自身进化的理解。' },
+  { year: '约250万年前', title: '能人与石器', desc: '能人出现，开始制造奥杜威石器，这是人类第一次改造自然物体。', era: 'prehistoric', type: 'tech', badge: '第一次技术', detail: '石器的发明标志着人类开始依赖工具生存，大脑因此获得更多营养，形成良性循环。' },
+  { year: '约180万年前', title: '直立人', desc: '直立人走出非洲，扩散到欧亚大陆，首次控制使用火。', era: 'prehistoric', type: 'tech', badge: '第一次技术', detail: '火的控制使人类能够烹饪食物、驱赶野兽、在寒冷地区生存，是文明诞生的前提。' },
+  { year: '约100万年前', title: '阿舍利手斧', desc: '标准化的泪滴形手斧出现，展示了早期人类抽象思维的能力。', era: 'prehistoric', type: 'tech', badge: '技术革新' },
+  { year: '约70万年前', title: '北京人', desc: '北京人生活在周口店，留下了用火和狩猎的丰富证据。', era: 'prehistoric', type: 'culture', badge: '考古发现' },
+  { year: '约30万年前', title: '智人诞生', desc: '解剖学意义上的现代人类——智人在非洲首次出现。', era: 'prehistoric', type: 'science', badge: '起源' },
+  { year: '约20万年前', title: '语言起源', desc: '人类语言的雏形可能在这一时期形成，促进了复杂合作。', era: 'prehistoric', type: 'culture', badge: '里程碑' },
+  { year: '约10万年前', title: '认知革命', desc: '人类开始具备虚构故事、想象未来的能力，形成复杂社会结构。', era: 'prehistoric', type: 'culture', badge: '思想革命', detail: '尤瓦尔·赫拉利认为这是人类统治地球的关键能力。' },
+  { year: '约7.5万年前', title: '多巴巨灾', desc: '多巴火山爆发导致人类种群瓶颈，可能仅剩数千人。', era: 'prehistoric', type: 'science', badge: '灾难' },
+  { year: '约7万年前', title: '走出非洲', desc: '智人开始大规模迁徙出非洲，取代或融合其他古人类。', era: 'prehistoric', type: 'culture', badge: '迁徙' },
+  { year: '约5万年前', title: '澳大利亚定居', desc: '人类首次跨越海洋到达澳大利亚，展示了惊人的航海能力。', era: 'prehistoric', type: 'tech', badge: '第一次' },
+  { year: '约4.5万年前', title: '欧洲定居', desc: '智人进入欧洲，与尼安德特人共存一段时间后取而代之。', era: 'prehistoric', type: 'culture', badge: '迁徙' },
+  { year: '约4万年前', title: '洞穴艺术', desc: '欧洲和印尼出现最早的具象艺术，人类开始表达抽象思维。', era: 'prehistoric', type: 'culture', badge: '艺术起源', detail: '肖维岩洞和苏拉威西洞穴壁画证明艺术冲动是人类的天性。' },
+  { year: '约3.5万年前', title: '尼安德特人灭绝', desc: '尼安德特人作为最后一个其他人属物种消失。', era: 'prehistoric', type: 'science', badge: '进化' },
+  { year: '约2万年前', title: '末次冰期极盛', desc: '海平面下降，白令陆桥连接亚洲与美洲。', era: 'prehistoric', type: 'science', badge: '环境' },
+  { year: '约1.5万年前', title: '美洲定居', desc: '人类通过白令陆桥到达美洲，迅速扩散到整个大陆。', era: 'prehistoric', type: 'culture', badge: '迁徙' },
+  { year: '约1.2万年前', title: '纳图夫文化', desc: '近东地区出现半定居的狩猎采集社会，为农业革命奠定基础。', era: 'prehistoric', type: 'culture', badge: '定居' },
+  { year: '约1.1万年前', title: '哥贝克力石阵', desc: '世界上已知最古老的巨石神庙建成，挑战了文明演进的顺序。', era: 'prehistoric', type: 'culture', badge: '建筑奇迹', detail: '这一发现表明，可能是宗教需求推动了定居和农业的发展，而非相反。' },
+  { year: '约1万年前', title: '农业革命', desc: '肥沃新月地带开始驯化小麦、大麦、绵羊和山羊。', era: 'prehistoric', type: 'tech', badge: '第一次技术', detail: '农业革命使人口爆炸式增长，催生了城市、阶级、文字和复杂社会。' },
+  { year: '约9000年前', title: '耶利哥城', desc: '世界上最早的城市之一耶利哥建成，有城墙和塔楼。', era: 'prehistoric', type: 'culture', badge: '第一个' },
+  { year: '约8000年前', title: '中国农业', desc: '长江流域驯化水稻，黄河流域驯化粟。', era: 'prehistoric', type: 'tech', badge: '农业' },
+  { year: '约7000年前', title: '中美洲农业', desc: '玉米、南瓜和豆类在中美洲被驯化。', era: 'prehistoric', type: 'tech', badge: '农业' },
+  { year: '约6000年前', title: '轮子发明', desc: '轮子在美索不达米亚被发明，最初用于制陶。', era: 'prehistoric', type: 'tech', badge: '第一次技术', detail: '轮子被认为是人类最伟大的发明之一，极大地提高了运输效率。' },
+  { year: '约5500年前', title: '文字雏形', desc: '苏美尔人开始使用楔形文字的雏形记录商业交易。', era: 'prehistoric', type: 'tech', badge: '发明' },
+  
+  // ===== 古代文明 (扩充) =====
+  { year: '前3500年', title: '楔形文字成熟', desc: '苏美尔楔形文字发展成熟，历史时代正式开始。', era: 'ancient', type: 'tech', badge: '第一次技术', detail: '文字的发明使知识可以跨越时空传承，是人类文明最重要的里程碑之一。' },
+  { year: '前3400年', title: '埃及第一王朝', desc: '上下埃及统一，法老时代开始。', era: 'ancient', type: 'culture', badge: '国家' },
+  { year: '前3200年', title: '象形文字', desc: '古埃及象形文字系统形成。', era: 'ancient', type: 'tech', badge: '发明' },
+  { year: '前3000年', title: '印度河文明', desc: '哈拉帕文明在印度河流域兴起，城市规划先进。', era: 'ancient', type: 'culture', badge: '文明' },
+  { year: '前2700年', title: '吉尔伽美什史诗', desc: '世界上最早的史诗文学作品开始流传。', era: 'ancient', type: 'culture', badge: '文学' },
+  { year: '前2600年', title: '吉萨金字塔', desc: '胡夫金字塔建成，古代世界七大奇迹之首。', era: 'ancient', type: 'tech', badge: '建筑奇迹', detail: '金字塔的建造展示了古埃及人惊人的数学、工程和组织能力。' },
+  { year: '前2500年', title: '印度河文字', desc: '印度河文明使用至今未破译的文字。', era: 'ancient', type: 'tech', badge: '文字' },
+  { year: '前2300年', title: '阿卡德帝国', desc: '萨尔贡大帝建立世界上第一个多民族帝国。', era: 'ancient', type: 'culture', badge: '第一个' },
+  { year: '前2100年', title: '乌尔第三王朝', desc: '苏美尔文明的最后辉煌，《乌尔纳姆法典》颁布。', era: 'ancient', type: 'culture', badge: '法典' },
+  { year: '前2000年', title: '米诺斯文明', desc: '克里特岛米诺斯文明达到鼎盛，宫殿建筑宏伟。', era: 'ancient', type: 'culture', badge: '文明' },
+  { year: '前1800年', title: '汉谟拉比法典', desc: '巴比伦国王汉谟拉比颁布著名法典，"以眼还眼"。', era: 'ancient', type: 'culture', badge: '第一部', detail: '这是已知最早的完整成文法典，奠定了法律面前人人平等的原则。' },
+  { year: '前1750年', title: '赫梯铁器', desc: '赫梯人掌握炼铁技术，铁器时代即将来临。', era: 'ancient', type: 'tech', badge: '第一次技术' },
+  { year: '前1600年', title: '商朝建立', desc: '中国商朝建立，甲骨文和青铜器达到高峰。', era: 'ancient', type: 'culture', badge: '朝代' },
+  { year: '前1500年', title: '字母文字', desc: '腓尼基人发明字母文字，成为西方文字的祖先。', era: 'ancient', type: 'tech', badge: '第一次技术' },
+  { year: '前1400年', title: '甲骨文', desc: '商朝甲骨文成熟，记录占卜和历史。', era: 'ancient', type: 'tech', badge: '文字' },
+  { year: '前1300年', title: '图坦卡蒙', desc: '少年法老图坦卡蒙在位，其陵墓后来成为重大考古发现。', era: 'ancient', type: 'person', badge: '人物' },
+  { year: '前1200年', title: '特洛伊战争', desc: '传说中特洛伊战争发生，迈锡尼文明开始衰落。', era: 'ancient', type: 'culture', badge: '传说' },
+  { year: '前1200年', title: '海上民族', desc: '海上民族入侵导致东地中海多个文明崩溃。', era: 'ancient', type: 'war', badge: '灾难' },
+  { year: '前1046年', title: '周朝建立', desc: '武王伐纣，周朝建立，分封制开始。', era: 'ancient', type: 'culture', badge: '朝代' },
+  { year: '前1000年', title: '所罗门圣殿', desc: '耶路撒冷第一圣殿建成。', era: 'ancient', type: 'culture', badge: '建筑' },
+  { year: '前900年', title: '新亚述帝国', desc: '亚述帝国崛起，成为古代最强大的军事帝国之一。', era: 'ancient', type: 'culture', badge: '帝国' },
+  { year: '前800年', title: '希腊城邦', desc: '希腊城邦制度开始形成。', era: 'ancient', type: 'culture', badge: '政治' },
+  { year: '前776年', title: '首届奥运会', desc: '古希腊首届奥林匹克运动会举行。', era: 'ancient', type: 'culture', badge: '第一届' },
+  { year: '前753年', title: '罗马建城', desc: '传说罗慕路斯建立罗马城。', era: 'ancient', type: 'culture', badge: '起源' },
+  { year: '前700年', title: '吕底亚铸币', desc: '吕底亚王国铸造世界上第一批金银货币。', era: 'ancient', type: 'tech', badge: '第一次技术' },
+  
+  // ===== 古典时代 (扩充) =====
+  { year: '前600年', title: '巴比伦空中花园', desc: '尼布甲尼撒二世建造空中花园。', era: 'classical', type: 'tech', badge: '建筑奇迹' },
+  { year: '前600年', title: '百家争鸣', desc: '中国春秋时期，老子、孔子等思想家涌现。', era: 'classical', type: 'person', badge: '思想革命' },
+  { year: '前586年', title: '第一圣殿被毁', desc: '巴比伦摧毁耶路撒冷圣殿，犹太人开始流亡。', era: 'classical', type: 'culture', badge: '灾难' },
+  { year: '前563年', title: '佛陀诞生', desc: '释迦牟尼诞生，佛教将在亚洲产生深远影响。', era: 'classical', type: 'person', badge: '伟人' },
+  { year: '前551年', title: '孔子诞生', desc: '孔子诞生，儒家思想将塑造东亚文明数千年。', era: 'classical', type: 'person', badge: '伟人' },
+  { year: '前550年', title: '波斯帝国', desc: '居鲁士大帝建立阿契美尼德帝国，第一个世界性帝国。', era: 'classical', type: 'culture', badge: '第一个' },
+  { year: '前539年', title: '居鲁士圆柱', desc: '居鲁士大帝释放犹太人，人权宣言雏形。', era: 'classical', type: 'culture', badge: '人权' },
+  { year: '前525年', title: '希腊戏剧', desc: '希腊悲剧和喜剧在雅典繁荣。', era: 'classical', type: 'culture', badge: '艺术' },
+  { year: '前508年', title: '雅典民主', desc: '克里斯提尼改革，雅典民主制度确立。', era: 'classical', type: 'culture', badge: '第一次', detail: '这是人类历史上第一次公民参与政治决策，开创了民主政治的先河。' },
+  { year: '前500年', title: '玛雅文明', desc: '玛雅文明进入古典期，天文学和数学成就斐然。', era: 'classical', type: 'culture', badge: '文明' },
+  { year: '前490年', title: '马拉松战役', desc: '希腊联军击败波斯军队，马拉松赛跑由此而来。', era: 'classical', type: 'war', badge: '战争' },
+  { year: '前480年', title: '温泉关战役', desc: '斯巴达三百勇士抵抗波斯大军。', era: 'classical', type: 'war', badge: '战争' },
+  { year: '前470年', title: '苏格拉底', desc: '苏格拉底诞生，西方哲学奠基人。', era: 'classical', type: 'person', badge: '伟人' },
+  { year: '前447年', title: '帕特农神庙', desc: '雅典卫城帕特农神庙开始建造。', era: 'classical', type: 'tech', badge: '建筑奇迹' },
+  { year: '前432年', title: '孟子诞生', desc: '孟子诞生，继承发展儒家思想。', era: 'classical', type: 'person', badge: '伟人' },
+  { year: '前427年', title: '柏拉图诞生', desc: '柏拉图诞生，创立西方第一所学院。', era: 'classical', type: 'person', badge: '伟人' },
+  { year: '前403年', title: '战国时代', desc: '三家分晋，中国进入战国时代。', era: 'classical', type: 'culture', badge: '时代' },
+  { year: '前384年', title: '亚里士多德', desc: '亚里士多德诞生，百科全书式学者。', era: 'classical', type: 'person', badge: '伟人' },
+  { year: '前370年', title: '庄子诞生', desc: '庄子诞生，道家思想代表人物。', era: 'classical', type: 'person', badge: '伟人' },
+  { year: '前356年', title: '亚历山大诞生', desc: '亚历山大大帝诞生。', era: 'classical', type: 'person', badge: '伟人' },
+  { year: '前350年', title: '商鞅变法', desc: '秦国商鞅变法，奠定统一基础。', era: 'classical', type: 'culture', badge: '改革' },
+  { year: '前334年', title: '亚历山大东征', desc: '亚历山大开始东征，建立横跨三大洲的帝国。', era: 'classical', type: 'person', badge: '征服者' },
+  { year: '前322年', title: '旃陀罗笈多', desc: '旃陀罗笈多建立孔雀王朝，印度首次统一。', era: 'classical', type: 'person', badge: '伟人' },
+  { year: '前280年', title: '阿基米德', desc: '阿基米德发现浮力定律和杠杆原理。', era: 'classical', type: 'science', badge: '科学突破' },
+  { year: '前268年', title: '阿育王', desc: '阿育王统一印度后皈依佛教，传播和平理念。', era: 'classical', type: 'person', badge: '伟人' },
+  { year: '前260年', title: '长平之战', desc: '秦赵长平之战，战国最大规模战役。', era: 'classical', type: 'war', badge: '战争' },
+  { year: '前221年', title: '秦统一中国', desc: '秦始皇统一六国，建立第一个中央集权帝国。', era: 'classical', type: 'culture', badge: '第一次', detail: '秦始皇统一文字、度量衡，修建长城，对中国历史影响深远。' },
+  { year: '前213年', title: '焚书坑儒', desc: '秦始皇焚书坑儒，思想控制。', era: 'classical', type: 'culture', badge: '灾难' },
+  { year: '前206年', title: '汉朝建立', desc: '刘邦建立汉朝，儒家思想成为正统。', era: 'classical', type: 'culture', badge: '朝代' },
+  { year: '前200年', title: '白登之围', desc: '汉高祖被匈奴围困，开启和亲政策。', era: 'classical', type: 'war', badge: '战争' },
+  { year: '前195年', title: '丝绸之路', desc: '张骞出使西域，丝绸之路逐渐形成。', era: 'classical', type: 'culture', badge: '第一次', detail: '丝绸之路连接了东西方文明，促进了贸易、宗教和技术的交流。' },
+  { year: '前146年', title: '罗马征服希腊', desc: '罗马摧毁迦太基和科林斯，成为地中海霸主。', era: 'classical', type: 'war', badge: '帝国' },
+  { year: '前140年', title: '汉武帝', desc: '汉武帝即位，独尊儒术，北击匈奴。', era: 'classical', type: 'person', badge: '伟人' },
+  { year: '前104年', title: '太初历', desc: '中国颁布太初历，历法系统完善。', era: 'classical', type: 'science', badge: '科学' },
+  { year: '前100年', title: '凯撒诞生', desc: '尤利乌斯·凯撒诞生。', era: 'classical', type: 'person', badge: '伟人' },
+  { year: '前91年', title: '史记', desc: '司马迁开始撰写《史记》。', era: 'classical', type: 'culture', badge: '文学' },
+  { year: '前60年', title: '前三头同盟', desc: '凯撒、庞培、克拉苏结盟。', era: 'classical', type: 'culture', badge: '政治' },
+  { year: '前55年', title: '凯撒入侵不列颠', desc: '罗马人首次踏上不列颠土地。', era: 'classical', type: 'war', badge: '征服' },
+  { year: '前49年', title: '跨越卢比孔', desc: '凯撒跨越卢比孔河，内战开始。', era: 'classical', type: 'war', badge: '战争' },
+  { year: '前44年', title: '凯撒遇刺', desc: '凯撒被元老院议员刺杀。', era: 'classical', type: 'person', badge: '事件' },
+  { year: '前27年', title: '罗马帝国', desc: '屋大维成为奥古斯都，罗马帝国时代开始。', era: 'classical', type: 'culture', badge: '帝国', detail: '罗马和平时期开始，地中海成为罗马的内湖。' },
+  { year: '公元1年', title: '耶稣诞生', desc: '耶稣基督诞生，基督教将改变世界。', era: 'classical', type: 'person', badge: '伟人', detail: '基督教的诞生对人类历史产生了不可估量的影响。' },
+  { year: '公元25年', title: '东汉建立', desc: '刘秀建立东汉王朝。', era: 'classical', type: 'culture', badge: '朝代' },
+  { year: '公元50年', title: '佛教传入中国', desc: '佛教开始传入中国。', era: 'classical', type: 'culture', badge: '传播' },
+  { year: '公元64年', title: '罗马大火', desc: '罗马城大火，基督徒被迫害。', era: 'classical', type: 'culture', badge: '灾难' },
+  { year: '公元79年', title: '维苏威火山', desc: '庞贝和赫库兰尼姆被火山灰掩埋。', era: 'classical', type: 'science', badge: '灾难' },
+  { year: '公元105年', title: '蔡伦造纸', desc: '蔡伦改进造纸术，四大发明之一。', era: 'classical', type: 'tech', badge: '第一次技术', detail: '造纸术使知识传播成本大幅降低，是信息革命的重要里程碑。' },
+  { year: '公元132年', title: '张衡地动仪', desc: '张衡发明地动仪，世界第一台地震仪器。', era: 'classical', type: 'tech', badge: '第一次技术' },
+  { year: '公元166年', title: '大秦使臣', desc: '罗马帝国使臣到达中国，东西方首次官方接触。', era: 'classical', type: 'culture', badge: '第一次' },
+  { year: '公元184年', title: '黄巾起义', desc: '黄巾起义爆发，东汉衰落。', era: 'classical', type: 'war', badge: '起义' },
+  { year: '公元200年', title: '官渡之战', desc: '曹操以少胜多，统一北方。', era: 'classical', type: 'war', badge: '战争' },
+  { year: '公元208年', title: '赤壁之战', desc: '孙刘联军击败曹操，三国鼎立格局形成。', era: 'classical', type: 'war', badge: '战争' },
+  { year: '公元220年', title: '三国开始', desc: '曹丕篡汉，三国时代正式开始。', era: 'classical', type: 'culture', badge: '时代' },
+  { year: '公元280年', title: '西晋统一', desc: '西晋短暂统一中国。', era: 'classical', type: 'culture', badge: '统一' },
+  { year: '公元313年', title: '米兰敕令', desc: '罗马帝国承认基督教合法地位。', era: 'classical', type: 'culture', badge: '里程碑' },
+  { year: '公元320年', title: '笈多王朝', desc: '印度笈多王朝建立，印度古典文化黄金时代。', era: 'classical', type: 'culture', badge: '黄金时代' },
+  { year: '公元350年', title: '匈奴西迁', desc: '匈奴开始西迁，引发民族大迁徙。', era: 'classical', type: 'culture', badge: '迁徙' },
+  { year: '公元395年', title: '罗马分裂', desc: '罗马帝国分裂为东西两部分。', era: 'classical', type: 'culture', badge: '分裂' },
+  { year: '公元400年', title: '鸠摩罗什', desc: '鸠摩罗什在长安翻译佛经。', era: 'classical', type: 'person', badge: '伟人' },
+  { year: '公元410年', title: '罗马之劫', desc: '西哥特人攻陷罗马，帝国衰落。', era: 'classical', type: 'war', badge: '灾难' },
+  { year: '公元420年', title: '南北朝', desc: '刘裕代晋，中国进入南北朝时期。', era: 'classical', type: 'culture', badge: '时代' },
+  { year: '公元451年', title: '沙隆战役', desc: '罗马联军击败匈人阿提拉。', era: 'classical', type: 'war', badge: '战争' },
+  { year: '公元455年', title: '汪达尔洗劫罗马', desc: '汪达尔人洗劫罗马城。', era: 'classical', type: 'war', badge: '灾难' },
+  { year: '公元476年', title: '西罗马灭亡', desc: '西罗马帝国灭亡，欧洲进入中世纪。', era: 'classical', type: 'culture', badge: '时代转折', detail: '这一事件标志着古代的终结和中世纪的开始。' },
+  
+  // ===== 中世纪 (扩充) =====
+  { year: '486年', title: '法兰克王国', desc: '克洛维建立法兰克王国。', era: 'medieval', type: 'culture', badge: '国家' },
+  { year: '529年', title: '圣本笃会规', desc: '本笃会成立，西方修道制度确立。', era: 'medieval', type: 'culture', badge: '宗教' },
+  { year: '532年', title: '尼卡暴动', desc: '君士坦丁堡发生大规模暴动。', era: 'medieval', type: 'culture', badge: '事件' },
+  { year: '537年', title: '圣索菲亚大教堂', desc: '圣索菲亚大教堂建成，拜占庭建筑巅峰。', era: 'medieval', type: 'tech', badge: '建筑奇迹' },
+  { year: '542年', title: '查士丁尼瘟疫', desc: '鼠疫横扫地中海，人口锐减。', era: 'medieval', type: 'science', badge: '灾难' },
+  { year: '570年', title: '穆罕默德诞生', desc: '伊斯兰教先知穆罕默德诞生。', era: 'medieval', type: 'person', badge: '伟人' },
+  { year: '589年', title: '隋朝统一', desc: '隋文帝统一中国，结束分裂。', era: 'medieval', type: 'culture', badge: '统一' },
+  { year: '610年', title: '穆罕默德受启', desc: '穆罕默德在希拉山洞接受启示。', era: 'medieval', type: 'culture', badge: '宗教' },
+  { year: '618年', title: '唐朝建立', desc: '李渊建立唐朝，中国进入黄金时代。', era: 'medieval', type: 'culture', badge: '黄金时代' },
+  { year: '622年', title: '希吉拉', desc: '穆罕默德迁徙麦地那，伊斯兰历元年。', era: 'medieval', type: 'culture', badge: '宗教诞生' },
+  { year: '630年', title: '麦加征服', desc: '穆罕默德和平征服麦加。', era: 'medieval', type: 'culture', badge: '征服' },
+  { year: '632年', title: '四大哈里发', desc: '穆罕默德去世，四大哈里发时代开始。', era: 'medieval', type: 'culture', badge: '帝国' },
+  { year: '636年', title: '雅尔穆克战役', desc: '阿拉伯人击败拜占庭，征服叙利亚。', era: 'medieval', type: 'war', badge: '战争' },
+  { year: '645年', title: '大化改新', desc: '日本孝德天皇推行改革，学习唐朝。', era: 'medieval', type: 'culture', badge: '改革' },
+  { year: '650年', title: '古兰经定本', desc: '奥斯曼定本《古兰经》完成。', era: 'medieval', type: 'culture', badge: '经典' },
+  { year: '661年', title: '倭马亚王朝', desc: '穆阿维叶建立倭马亚王朝。', era: 'medieval', type: 'culture', badge: '帝国' },
+  { year: '690年', title: '武则天称帝', desc: '武则天成为中国历史上唯一女皇帝。', era: 'medieval', type: 'person', badge: '伟人' },
+  { year: '700年', title: '玛雅古典期', desc: '玛雅文明达到鼎盛。', era: 'medieval', type: 'culture', badge: '文明' },
+  { year: '711年', title: '征服西班牙', desc: '阿拉伯人跨越直布罗陀海峡，征服西哥特王国。', era: 'medieval', type: 'war', badge: '征服' },
+  { year: '712年', title: '古事记', desc: '日本最古老史书《古事记》完成。', era: 'medieval', type: 'culture', badge: '文学' },
+  { year: '732年', title: '图尔战役', desc: '查理·马特击败阿拉伯人，阻止其西进。', era: 'medieval', type: 'war', badge: '战争' },
+  { year: '750年', title: '阿拔斯王朝', desc: '阿拔斯王朝取代倭马亚，巴格达将成世界中心。', era: 'medieval', type: 'culture', badge: '帝国' },
+  { year: '751年', title: '怛罗斯战役', desc: '阿拉伯人击败唐朝，造纸术西传。', era: 'medieval', type: 'war', badge: '战争' },
+  { year: '754年', title: '丕平献土', desc: '丕平向教皇捐赠土地，教皇国建立。', era: 'medieval', type: 'culture', badge: '政治' },
+  { year: '762年', title: '巴格达建城', desc: '曼苏尔建立巴格达，智慧之城。', era: 'medieval', type: 'culture', badge: '城市' },
+  { year: '800年', title: '查理曼加冕', desc: '查理曼被加冕为罗马皇帝，神圣罗马帝国雏形。', era: 'medieval', type: 'person', badge: '伟人' },
+  { year: '814年', title: '查理曼去世', desc: '查理曼去世，帝国随后分裂。', era: 'medieval', type: 'person', badge: '事件' },
+  { year: '843年', title: '凡尔登条约', desc: '查理曼帝国一分为三，法德意雏形。', era: 'medieval', type: 'culture', badge: '条约' },
+  { year: '845年', title: '会昌灭佛', desc: '唐武宗灭佛，佛教受重创。', era: 'medieval', type: 'culture', badge: '灾难' },
+  { year: '860年', title: '罗斯建国', desc: '维京人留里克建立罗斯公国。', era: 'medieval', type: 'culture', badge: '国家' },
+  { year: '868年', title: '金刚经印刷', desc: '现存最早有确切日期的印刷品。', era: 'medieval', type: 'tech', badge: '技术' },
+  { year: '880年', title: '维京时代', desc: '维京人活跃于欧洲各地。', era: 'medieval', type: 'culture', badge: '时代' },
+  { year: '900年', title: '玛雅衰落', desc: '玛雅城邦开始衰落。', era: 'medieval', type: 'culture', badge: '衰落' },
+  { year: '907年', title: '唐朝灭亡', desc: '唐朝灭亡，五代十国开始。', era: 'medieval', type: 'culture', badge: '分裂' },
+  { year: '960年', title: '宋朝建立', desc: '赵匡胤建立宋朝，文治时代。', era: 'medieval', type: 'culture', badge: '朝代' },
+  { year: '962年', title: '神圣罗马帝国', desc: '奥托一世加冕，神圣罗马帝国建立。', era: 'medieval', type: 'culture', badge: '帝国' },
+  { year: '988年', title: '罗斯受洗', desc: '弗拉基米尔大公受洗，基辅罗斯基督教化。', era: 'medieval', type: 'culture', badge: '宗教' },
+  { year: '1000年', title: '千禧年', desc: '基督教世界对末日的期待。', era: 'medieval', type: 'culture', badge: '事件' },
+  { year: '1004年', title: '澶渊之盟', desc: '宋辽议和，百年和平。', era: 'medieval', type: 'culture', badge: '条约' },
+  { year: '1044年', title: '活字印刷', desc: '毕昇发明胶泥活字印刷。', era: 'medieval', type: 'tech', badge: '第一次技术' },
+  { year: '1054年', title: '东西教会大分裂', desc: '天主教与东正教正式分裂。', era: 'medieval', type: 'culture', badge: '分裂' },
+  { year: '1066年', title: '诺曼征服', desc: '威廉征服英格兰，英国历史转折点。', era: 'medieval', type: 'war', badge: '征服' },
+  { year: '1071年', title: '曼齐克特战役', desc: '塞尔柱土耳其击败拜占庭，小亚细亚伊斯兰化。', era: 'medieval', type: 'war', badge: '战争' },
+  { year: '1088年', title: '博洛尼亚大学', desc: '欧洲最古老的大学建立。', era: 'medieval', type: 'culture', badge: '教育' },
+  { year: '1095年', title: '第一次十字军', desc: '教皇乌尔班二世号召十字军东征。', era: 'medieval', type: 'war', badge: '战争' },
+  { year: '1099年', title: '耶路撒冷陷落', desc: '十字军攻陷耶路撒冷，建立王国。', era: 'medieval', type: 'war', badge: '战争' },
+  { year: '1100年', title: '欧洲复苏', desc: '欧洲人口增长，城市兴起。', era: 'medieval', type: 'culture', badge: '发展' },
+  { year: '1115年', title: '火药武器', desc: '中国首次记载火药在战争中的使用。', era: 'medieval', type: 'tech', badge: '第一次技术' },
+  { year: '1127年', title: '靖康之变', desc: '金兵俘虏宋帝，北宋灭亡。', era: 'medieval', type: 'war', badge: '灾难' },
+  { year: '1147年', title: '第二次十字军', desc: '第二次十字军东征失败。', era: 'medieval', type: 'war', badge: '战争' },
+  { year: '1158年', title: '慕尼黑建城', desc: '狮子亨利建立慕尼黑。', era: 'medieval', type: 'culture', badge: '城市' },
+  { year: '1187年', title: '哈丁战役', desc: '萨拉丁收复耶路撒冷。', era: 'medieval', type: 'war', badge: '战争' },
+  { year: '1189年', title: '第三次十字军', desc: '狮心王理查参与第三次十字军东征。', era: 'medieval', type: 'war', badge: '战争' },
+  { year: '1200年', title: '印加帝国', desc: '印加帝国在安第斯山脉兴起。', era: 'medieval', type: 'culture', badge: '帝国' },
+  { year: '1202年', title: '第四次十字军', desc: '十字军洗劫君士坦丁堡。', era: 'medieval', type: 'war', badge: '灾难' },
+  { year: '1206年', title: '成吉思汗', desc: '铁木真统一蒙古，建立蒙古帝国。', era: 'medieval', type: 'person', badge: '伟人', detail: '成吉思汗建立了人类历史上最大的连续疆域帝国。' },
+  { year: '1215年', title: '大宪章', desc: '英王约翰被迫签署大宪章，限制王权。', era: 'medieval', type: 'culture', badge: '第一次', detail: '大宪章是现代宪政的基石，"王在法下"的原则由此确立。' },
+  { year: '1219年', title: '蒙古西征', desc: '成吉思汗开始第一次西征。', era: 'medieval', type: 'war', badge: '征服' },
+  { year: '1220年', title: '花剌子模灭亡', desc: '蒙古灭花剌子模，中亚伊斯兰化受挫。', era: 'medieval', type: 'war', badge: '征服' },
+  { year: '1227年', title: '成吉思汗去世', desc: '成吉思汗去世，帝国分裂为四大汗国。', era: 'medieval', type: 'person', badge: '事件' },
+  { year: '1234年', title: '金朝灭亡', desc: '蒙宋联军灭金。', era: 'medieval', type: 'war', badge: '战争' },
+  { year: '1238年', title: '莫斯科建城', desc: '莫斯科首次出现在历史记录中。', era: 'medieval', type: 'culture', badge: '城市' },
+  { year: '1241年', title: '蒙古入侵欧洲', desc: '蒙古军队击败波兰和匈牙利联军。', era: 'medieval', type: 'war', badge: '战争' },
+  { year: '1258年', title: '巴格达陷落', desc: '旭烈兀攻陷巴格达，阿拔斯王朝灭亡。', era: 'medieval', type: 'war', badge: '灾难' },
+  { year: '1260年', title: '艾因贾鲁战役', desc: '马穆鲁克击败蒙古，阻止其西进。', era: 'medieval', type: 'war', badge: '战争' },
+  { year: '1265年', title: '英国议会', desc: '英国召开第一次议会。', era: 'medieval', type: 'culture', badge: '第一次' },
+  { year: '1271年', title: '马可波罗东游', desc: '马可波罗开始他的东方之旅。', era: 'medieval', type: 'person', badge: '探索者' },
+  { year: '1279年', title: '元朝统一', desc: '忽必烈灭宋，中国首次被外族完全征服。', era: 'medieval', type: 'culture', badge: '统一' },
+  { year: '1291年', title: '阿卡陷落', desc: '十字军最后一个据点失守，东征结束。', era: 'medieval', type: 'war', badge: '战争' },
+  { year: '1299年', title: '奥斯曼建国', desc: '奥斯曼一世建立奥斯曼贝伊国。', era: 'medieval', type: 'culture', badge: '帝国' },
+  { year: '1300年', title: '文艺复兴萌芽', desc: '意大利文艺复兴开始萌芽。', era: 'medieval', type: 'culture', badge: '萌芽' },
+  { year: '1303年', title: '阿维尼翁之囚', desc: '教皇迁往阿维尼翁，教廷威信下降。', era: 'medieval', type: 'culture', badge: '事件' },
+  { year: '1315年', title: '大饥荒', desc: '欧洲大饥荒开始。', era: 'medieval', type: 'science', badge: '灾难' },
+  { year: '1324年', title: '马里帝国', desc: '曼萨·穆萨朝圣，马里帝国闻名欧洲。', era: 'medieval', type: 'person', badge: '伟人' },
+  { year: '1337年', title: '百年战争', desc: '英法百年战争开始。', era: 'medieval', type: 'war', badge: '战争' },
+  { year: '1347年', title: '黑死病', desc: '黑死病肆虐欧洲，人口减少三分之一。', era: 'medieval', type: 'science', badge: '灾难', detail: '黑死病深刻改变了欧洲社会结构，加速了封建制度的瓦解。' },
+  { year: '1356年', title: '普瓦捷战役', desc: '法国国王被俘，英国占优。', era: 'medieval', type: 'war', badge: '战争' },
+  { year: '1368年', title: '明朝建立', desc: '朱元璋建立明朝，蒙古人退出中原。', era: 'medieval', type: 'culture', badge: '朝代' },
+  { year: '1378年', title: '教会大分裂', desc: '天主教会出现两个教皇。', era: 'medieval', type: 'culture', badge: '分裂' },
+  { year: '1380年', title: '库利科沃战役', desc: '莫斯科击败金帐汗国，俄罗斯崛起。', era: 'medieval', type: 'war', badge: '战争' },
+  { year: '1381年', title: '农民起义', desc: '英国农民起义。', era: 'medieval', type: 'culture', badge: '起义' },
+  { year: '1389年', title: '科索沃战役', desc: '奥斯曼击败塞尔维亚，巴尔干伊斯兰化。', era: 'medieval', type: 'war', badge: '战争' },
+  { year: '1400年', title: '帖木儿帝国', desc: '帖木儿帝国达到鼎盛。', era: 'medieval', type: 'culture', badge: '帝国' },
+  { year: '1405年', title: '郑和下西洋', desc: '郑和首次下西洋，人类航海史壮举。', era: 'medieval', type: 'tech', badge: '第一次', detail: '郑和的船队是当时世界上最大的舰队，展示了中国的航海技术。' },
+  { year: '1415年', title: '阿金库尔战役', desc: '英军长弓手大败法军。', era: 'medieval', type: 'war', badge: '战争' },
+  { year: '1420年', title: '紫禁城', desc: '北京紫禁城建成。', era: 'medieval', type: 'tech', badge: '建筑奇迹' },
+  { year: '1429年', title: '圣女贞德', desc: '贞德带领法军解放奥尔良。', era: 'medieval', type: 'person', badge: '伟人' },
+  { year: '1441年', title: '葡萄牙奴隶贸易', desc: '葡萄牙开始大西洋奴隶贸易。', era: 'medieval', type: 'culture', badge: '灾难' },
+  { year: '1445年', title: '古腾堡印刷', desc: '古腾堡发明活字印刷术。', era: 'medieval', type: 'tech', badge: '第一次技术', detail: '印刷术使知识爆炸式传播，是文艺复兴和宗教改革的技术基础。' },
+  { year: '1453年', title: '君士坦丁堡陷落', desc: '奥斯曼攻陷君士坦丁堡，拜占庭灭亡。', era: 'medieval', type: 'war', badge: '时代转折', detail: '这一事件标志着中世纪的结束，学者西迁推动了文艺复兴。' },
+  { year: '1453年', title: '百年战争结束', desc: '法国最终赢得百年战争。', era: 'medieval', type: 'war', badge: '战争' },
+  { year: '1455年', title: '玫瑰战争', desc: '英国玫瑰战争开始。', era: 'medieval', type: 'war', badge: '战争' },
+  
+  // ===== 文艺复兴与大航海 (扩充) =====
+  { year: '1464年', title: '柏拉图学院', desc: '佛罗伦萨建立柏拉图学院。', era: 'renaissance', type: 'culture', badge: '教育' },
+  { year: '1466年', title: '伊拉斯谟诞生', desc: '人文主义者伊拉斯谟诞生。', era: 'renaissance', type: 'person', badge: '伟人' },
+  { year: '1471年', title: '丢勒诞生', desc: '德国画家丢勒诞生。', era: 'renaissance', type: 'person', badge: '伟人' },
+  { year: '1473年', title: '哥白尼诞生', desc: '天文学家哥白尼诞生。', era: 'renaissance', type: 'person', badge: '伟人' },
+  { year: '1478年', title: '西班牙宗教裁判所', desc: '西班牙建立宗教裁判所。', era: 'renaissance', type: 'culture', badge: '灾难' },
+  { year: '1482年', title: '达芬奇米兰', desc: '达芬奇前往米兰工作。', era: 'renaissance', type: 'person', badge: '伟人' },
+  { year: '1485年', title: '玫瑰战争结束', desc: '都铎王朝建立。', era: 'renaissance', type: 'culture', badge: '朝代' },
+  { year: '1487年', title: '好望角', desc: '迪亚士绕过好望角。', era: 'renaissance', type: 'tech', badge: '探索' },
+  { year: '1488年', title: '维纳斯的诞生', desc: '波提切利创作《维纳斯的诞生》。', era: 'renaissance', type: 'culture', badge: '艺术' },
+  { year: '1492年', title: '哥伦布发现美洲', desc: '哥伦布到达美洲，新旧世界碰撞。', era: 'renaissance', type: 'tech', badge: '第一次', detail: '这一发现开启了全球化进程，深刻改变了世界历史。' },
+  { year: '1492年', title: '西班牙统一', desc: '西班牙完成收复失地运动。', era: 'renaissance', type: 'culture', badge: '统一' },
+  { year: '1494年', title: '瓜分世界', desc: '教皇子午线划分西班牙和葡萄牙势力范围。', era: 'renaissance', type: 'culture', badge: '条约' },
+  { year: '1495年', title: '最后的晚餐', desc: '达芬奇创作《最后的晚餐》。', era: 'renaissance', type: 'culture', badge: '艺术' },
+  { year: '1497年', title: '卡博特北美', desc: '卡博特到达北美。', era: 'renaissance', type: 'tech', badge: '探索' },
+  { year: '1498年', title: '达伽马印度', desc: '达伽马到达印度，开辟新航路。', era: 'renaissance', type: 'tech', badge: '第一次' },
+  { year: '1499年', title: '瓦尔朵战役', desc: '瑞士独立。', era: 'renaissance', type: 'war', badge: '战争' },
+  { year: '1500年', title: '卡布拉尔巴西', desc: '卡布拉尔发现巴西。', era: 'renaissance', type: 'tech', badge: '探索' },
+  { year: '1501年', title: '大卫像', desc: '米开朗基罗完成《大卫》。', era: 'renaissance', type: 'culture', badge: '艺术' },
+  { year: '1503年', title: '蒙娜丽莎', desc: '达芬奇开始创作《蒙娜丽莎》。', era: 'renaissance', type: 'culture', badge: '艺术' },
+  { year: '1507年', title: '美洲命名', desc: '新大陆以亚美利哥命名。', era: 'renaissance', type: 'culture', badge: '事件' },
+  { year: '1508年', title: '西斯廷天顶', desc: '米开朗基罗开始绘制西斯廷天顶画。', era: 'renaissance', type: 'culture', badge: '艺术' },
+  { year: '1509年', title: '亨利八世', desc: '亨利八世即位。', era: 'renaissance', type: 'person', badge: '伟人' },
+  { year: '1511年', title: '马六甲', desc: '葡萄牙攻占马六甲。', era: 'renaissance', type: 'war', badge: '征服' },
+  { year: '1513年', title: '马基雅维利', desc: '马基雅维利撰写《君主论》。', era: 'renaissance', type: 'person', badge: '伟人' },
+  { year: '1513年', title: '太平洋发现', desc: '巴尔沃亚发现太平洋。', era: 'renaissance', type: 'tech', badge: '第一次' },
+  { year: '1517年', title: '宗教改革', desc: '马丁·路德发表《九十五条论纲》。', era: 'renaissance', type: 'culture', badge: '宗教革命', detail: '宗教改革打破了天主教会的垄断，催生了新教，深刻影响了西方文明。' },
+  { year: '1519年', title: '麦哲伦环球', desc: '麦哲伦开始环球航行。', era: 'renaissance', type: 'tech', badge: '第一次' },
+  { year: '1519年', title: '科尔特斯', desc: '科尔特斯开始征服阿兹特克。', era: 'renaissance', type: 'war', badge: '征服' },
+  { year: '1521年', title: '阿兹特克灭亡', desc: '阿兹特克帝国灭亡。', era: 'renaissance', type: 'war', badge: '灾难' },
+  { year: '1521年', title: '沃尔姆斯会议', desc: '路德拒绝撤回观点。', era: 'renaissance', type: 'culture', badge: '事件' },
+  { year: '1522年', title: '环球航行完成', desc: '麦哲伦船队完成人类首次环球航行。', era: 'renaissance', type: 'tech', badge: '第一次', detail: '这证明了地球是圆的，是人类探索精神的伟大胜利。' },
+  { year: '1524年', title: '农民战争', desc: '德国农民战争爆发。', era: 'renaissance', type: 'culture', badge: '起义' },
+  { year: '1526年', title: '莫卧儿帝国', desc: '巴布尔建立莫卧儿帝国。', era: 'renaissance', type: 'culture', badge: '帝国' },
+  { year: '1527年', title: '罗马之劫', desc: '神圣罗马帝国军队洗劫罗马。', era: 'renaissance', type: 'war', badge: '灾难' },
+  { year: '1531年', title: '皮萨罗', desc: '皮萨罗开始征服印加。', era: 'renaissance', type: 'war', badge: '征服' },
+  { year: '1532年', title: '印加灭亡', desc: '印加帝国灭亡。', era: 'renaissance', type: 'war', badge: '灾难' },
+  { year: '1533年', title: '亨利八世离婚', desc: '亨利八世与罗马教廷决裂。', era: 'renaissance', type: 'culture', badge: '宗教' },
+  { year: '1534年', title: '耶稣会', desc: '罗耀拉创立耶稣会。', era: 'renaissance', type: 'culture', badge: '宗教' },
+  { year: '1536年', title: '加尔文改革', desc: '加尔文在日内瓦进行宗教改革。', era: 'renaissance', type: 'person', badge: '伟人' },
+  { year: '1541年', title: '萨伏那罗拉', desc: '加尔文统治日内瓦。', era: 'renaissance', type: 'culture', badge: '宗教' },
+  { year: '1543年', title: '日心说', desc: '哥白尼发表《天体运行论》。', era: 'renaissance', type: 'science', badge: '第一次科学', detail: '日心说挑战了地心说，开启了科学革命的序幕。' },
+  { year: '1543年', title: '人体构造', desc: '维萨里发表《人体构造》。', era: 'renaissance', type: 'science', badge: '科学突破' },
+  { year: '1545年', title: '特伦特会议', desc: '天主教会召开特伦特会议，反宗教改革开始。', era: 'renaissance', type: 'culture', badge: '宗教' },
+  { year: '1547年', title: '伊凡雷帝', desc: '伊凡四世加冕为沙皇。', era: 'renaissance', type: 'person', badge: '伟人' },
+  { year: '1550年', title: '巴西殖民', desc: '葡萄牙开始在巴西大规模殖民。', era: 'renaissance', type: 'culture', badge: '殖民' },
+  { year: '1553年', title: '玛丽一世', desc: '玛丽一世开始迫害新教徒。', era: 'renaissance', type: 'culture', badge: '灾难' },
+  { year: '1555年', title: '奥格斯堡和约', desc: '诸侯决定宗教信仰。', era: 'renaissance', type: 'culture', badge: '条约' },
+  { year: '1556年', title: '阿克巴大帝', desc: '阿克巴即位，莫卧儿帝国黄金时代。', era: 'renaissance', type: 'person', badge: '伟人' },
+  { year: '1558年', title: '伊丽莎白一世', desc: '伊丽莎白一世即位，英国黄金时代。', era: 'renaissance', type: 'person', badge: '伟人' },
+  { year: '1562年', title: '法国宗教战争', desc: '法国宗教战争开始。', era: 'renaissance', type: 'war', badge: '战争' },
+  { year: '1564年', title: '伽利略诞生', desc: '伽利略诞生。', era: 'renaissance', type: 'person', badge: '伟人' },
+  { year: '1564年', title: '莎士比亚诞生', desc: '莎士比亚诞生。', era: 'renaissance', type: 'person', badge: '伟人' },
+  { year: '1565年', title: '马尼拉', desc: '西班牙建立马尼拉。', era: 'renaissance', type: 'culture', badge: '城市' },
+  { year: '1566年', title: '尼德兰革命', desc: '尼德兰革命开始。', era: 'renaissance', type: 'war', badge: '革命' },
+  { year: '1568年', title: '织田信长', desc: '织田信长开始统一日本。', era: 'renaissance', type: 'person', badge: '伟人' },
+  { year: '1571年', title: '勒班陀海战', desc: '神圣同盟击败奥斯曼海军。', era: 'renaissance', type: 'war', badge: '战争' },
+  { year: '1572年', title: '圣巴托罗缪惨案', desc: '法国屠杀胡格诺派。', era: 'renaissance', type: 'war', badge: '灾难' },
+  { year: '1578年', title: '李时珍', desc: '李时珍完成《本草纲目》。', era: 'renaissance', type: 'science', badge: '科学' },
+  { year: '1580年', title: '西班牙兼并葡萄牙', desc: '西班牙兼并葡萄牙。', era: 'renaissance', type: 'culture', badge: '统一' },
+  { year: '1582年', title: '历法改革', desc: '教皇格里高利十三世推行格里历。', era: 'renaissance', type: 'science', badge: '改革' },
+  { year: '1588年', title: '无敌舰队', desc: '英国击败西班牙无敌舰队。', era: 'renaissance', type: 'war', badge: '战争' },
+  { year: '1590年', title: '显微镜', desc: '詹森发明显微镜。', era: 'renaissance', type: 'tech', badge: '发明' },
+  { year: '1598年', title: '南特敕令', desc: '亨利四世颁布南特敕令，宗教宽容。', era: 'renaissance', type: 'culture', badge: '条约' },
+  { year: '1600年', title: '东印度公司', desc: '英国东印度公司成立。', era: 'renaissance', type: 'culture', badge: '企业' },
+  { year: '1600年', title: '布鲁诺殉道', desc: '布鲁诺被烧死。', era: 'renaissance', type: 'person', badge: '殉道者' },
+  { year: '1602年', title: '荷兰东印度公司', desc: '荷兰东印度公司成立。', era: 'renaissance', type: 'culture', badge: '企业' },
+  { year: '1603年', title: '德川幕府', desc: '德川家康建立江户幕府。', era: 'renaissance', type: 'culture', badge: '朝代' },
+  { year: '1605年', title: '堂吉诃德', desc: '塞万提斯发表《堂吉诃德》。', era: 'renaissance', type: 'culture', badge: '文学' },
+  { year: '1608年', title: '望远镜', desc: '利珀希发明望远镜。', era: 'renaissance', type: 'tech', badge: '发明' },
+  { year: '1609年', title: '伽利略望远镜', desc: '伽利略用望远镜观测天空。', era: 'renaissance', type: 'science', badge: '第一次', detail: '伽利略发现了木星的卫星，支持了日心说。' },
+  { year: '1610年', title: '哈德逊河', desc: '哈德逊探索北美。', era: 'renaissance', type: 'tech', badge: '探索' },
+  { year: '1611年', title: '钦定版圣经', desc: '英王钦定版圣经出版。', era: 'renaissance', type: 'culture', badge: '经典' },
+  { year: '1618年', title: '三十年战争', desc: '三十年战争爆发。', era: 'renaissance', type: 'war', badge: '战争' },
+  { year: '1619年', title: '开普勒定律', desc: '开普勒发表行星运动定律。', era: 'renaissance', type: 'science', badge: '科学突破' },
+  { year: '1620年', title: '五月花号', desc: '清教徒乘坐五月花号到达北美。', era: 'renaissance', type: 'culture', badge: '迁徙' },
+  { year: '1620年', title: '归纳法', desc: '培根发表《新工具》。', era: 'renaissance', type: 'science', badge: '第一次' },
+  { year: '1628年', title: '血液循环', desc: '哈维发现血液循环。', era: 'renaissance', type: 'science', badge: '科学突破' },
+  { year: '1632年', title: '对话', desc: '伽利略发表《关于两大世界体系的对话》。', era: 'renaissance', type: 'science', badge: '科学' },
+  { year: '1633年', title: '伽利略受审', desc: '伽利略被宗教裁判所审判。', era: 'renaissance', type: 'person', badge: '事件' },
+  { year: '1637年', title: '方法论', desc: '笛卡尔发表《方法论》。', era: 'renaissance', type: 'person', badge: '伟人' },
+  { year: '1639年', title: '金星凌日', desc: '霍罗克斯观测到金星凌日。', era: 'renaissance', type: 'science', badge: '天文' },
+  { year: '1642年', title: '伽利略去世', desc: '伽利略去世。', era: 'renaissance', type: 'person', badge: '事件' },
+  { year: '1642年', title: '牛顿诞生', desc: '牛顿诞生。', era: 'renaissance', type: 'person', badge: '伟人' },
+  { year: '1643年', title: '路易十四', desc: '路易十四即位，太阳王时代。', era: 'renaissance', type: 'person', badge: '伟人' },
+  { year: '1644年', title: '明朝灭亡', desc: '明朝灭亡，清军入关。', era: 'renaissance', type: 'culture', badge: '朝代' },
+  { year: '1648年', title: '威斯特伐利亚和约', desc: '三十年战争结束，民族国家体系确立。', era: 'renaissance', type: 'culture', badge: '条约', detail: '威斯特伐利亚体系奠定了现代国际关系的基础。' },
+  { year: '1649年', title: '查理一世被处决', desc: '英国国王查理一世被处决。', era: 'renaissance', type: 'culture', badge: '革命' },
+  { year: '1651年', title: '利维坦', desc: '霍布斯发表《利维坦》。', era: 'renaissance', type: 'person', badge: '伟人' },
+  { year: '1652年', title: '开普敦', desc: '荷兰人在好望角建立殖民地。', era: 'renaissance', type: 'culture', badge: '殖民' },
+  { year: '1660年', title: '王政复辟', desc: '英国君主制复辟。', era: 'renaissance', type: 'culture', badge: '事件' },
+  { year: '1662年', title: '皇家学会', desc: '英国皇家学会获得特许状。', era: 'renaissance', type: 'science', badge: '机构' },
+  { year: '1666年', title: '万有引力', desc: '牛顿发现万有引力。', era: 'renaissance', type: 'science', badge: '科学突破' },
+  { year: '1666年', title: '伦敦大火', desc: '伦敦大火烧毁旧城。', era: 'renaissance', type: 'culture', badge: '灾难' },
+  { year: '1674年', title: '显微镜', desc: '列文虎克发现微生物。', era: 'renaissance', type: 'tech', badge: '第一次' },
+  { year: '1676年', title: '细菌', desc: '列文虎克发现细菌。', era: 'renaissance', type: 'science', badge: '发现' },
+  { year: '1683年', title: '维也纳之围', desc: '波兰援军解维也纳之围。', era: 'renaissance', type: 'war', badge: '战争' },
+  { year: '1687年', title: '自然哲学的数学原理', desc: '牛顿发表《原理》，经典力学建立。', era: 'renaissance', type: 'science', badge: '科学革命', detail: '牛顿的经典力学统一了天上和地上的物理学，是人类理性的伟大胜利。' },
+  { year: '1688年', title: '光荣革命', desc: '英国光荣革命，君主立宪制确立。', era: 'renaissance', type: 'culture', badge: '革命' },
+  { year: '1690年', title: '政府论', desc: '洛克发表《政府论》。', era: 'renaissance', type: 'person', badge: '伟人' },
+  
+  // ===== 工业革命 (扩充) =====
+  { year: '1701年', title: '播种机', desc: '塔尔发明播种机。', era: 'industrial', type: 'tech', badge: '发明' },
+  { year: '1705年', title: '纽科门蒸汽机', desc: '纽科门发明蒸汽机。', era: 'industrial', type: 'tech', badge: '发明' },
+  { year: '1707年', title: '英格兰苏格兰合并', desc: '大不列颠王国成立。', era: 'industrial', type: 'culture', badge: '统一' },
+  { year: '1712年', title: '蒸汽机应用', desc: '纽科门蒸汽机用于矿井排水。', era: 'industrial', type: 'tech', badge: '应用' },
+  { year: '1714年', title: '华伦海特', desc: '华伦海特发明水银温度计。', era: 'industrial', type: 'tech', badge: '发明' },
+  { year: '1720年', title: '南海泡沫', desc: '南海泡沫破裂，金融危机。', era: 'industrial', type: 'culture', badge: '危机' },
+  { year: '1723年', title: '亚当·斯密诞生', desc: '亚当·斯密诞生。', era: 'industrial', type: 'person', badge: '伟人' },
+  { year: '1727年', title: '牛顿去世', desc: '牛顿去世。', era: 'industrial', type: 'person', badge: '事件' },
+  { year: '1733年', title: '飞梭', desc: '凯伊发明飞梭。', era: 'industrial', type: 'tech', badge: '发明' },
+  { year: '1735年', title: '林奈分类', desc: '林奈发表自然分类系统。', era: 'industrial', type: 'science', badge: '科学' },
+  { year: '1742年', title: '摄氏温标', desc: '摄尔修斯提出摄氏温标。', era: 'industrial', type: 'science', badge: '标准' },
+  { year: '1748年', title: '庞贝发掘', desc: '庞贝古城开始发掘。', era: 'industrial', type: 'culture', badge: '考古' },
+  { year: '1751年', title: '百科全书', desc: '狄德罗开始编纂《百科全书》。', era: 'industrial', type: 'culture', badge: '里程碑' },
+  { year: '1752年', title: '风筝实验', desc: '富兰克林证明闪电是电。', era: 'industrial', type: 'science', badge: '实验' },
+  { year: '1756年', title: '七年战争', desc: '七年战争爆发。', era: 'industrial', type: 'war', badge: '战争' },
+  { year: '1757年', title: '普拉西战役', desc: '英国征服印度开始。', era: 'industrial', type: 'war', badge: '征服' },
+  { year: '1762年', title: '社会契约论', desc: '卢梭发表《社会契约论》。', era: 'industrial', type: 'person', badge: '伟人' },
+  { year: '1763年', title: '巴黎条约', desc: '七年战争结束，英国获得北美。', era: 'industrial', type: 'culture', badge: '条约' },
+  { year: '1764年', title: '珍妮纺纱机', desc: '哈格里夫斯发明珍妮纺纱机。', era: 'industrial', type: 'tech', badge: '发明' },
+  { year: '1765年', title: '瓦特蒸汽机', desc: '瓦特改良蒸汽机。', era: 'industrial', type: 'tech', badge: '第一次技术', detail: '瓦特的蒸汽机成为工业革命的动力源泉，改变了人类的生产方式。' },
+  { year: '1768年', title: '库克航行', desc: '库克船长开始太平洋探险。', era: 'industrial', type: 'tech', badge: '探索' },
+  { year: '1769年', title: '水力纺纱机', desc: '阿克莱特发明水力纺纱机。', era: 'industrial', type: 'tech', badge: '发明' },
+  { year: '1772年', title: '氧气', desc: '舍勒和普利斯特利发现氧气。', era: 'industrial', type: 'science', badge: '发现' },
+  { year: '1774年', title: '氧气命名', desc: '拉瓦锡命名氧气，推翻燃素说。', era: 'industrial', type: 'science', badge: '科学革命' },
+  { year: '1775年', title: '美国独立战争', desc: '美国独立战争爆发。', era: 'industrial', type: 'war', badge: '革命' },
+  { year: '1776年', title: '国富论', desc: '亚当·斯密发表《国富论》。', era: 'industrial', type: 'person', badge: '伟人' },
+  { year: '1776年', title: '独立宣言', desc: '美国发表《独立宣言》。', era: 'industrial', type: 'culture', badge: '第一次', detail: '"人人生而平等"的理念影响了此后的人类历史。' },
+  { year: '1779年', title: '骡机', desc: '克朗普顿发明骡机。', era: 'industrial', type: 'tech', badge: '发明' },
+  { year: '1781年', title: '天王星', desc: '赫歇尔发现天王星。', era: 'industrial', type: 'science', badge: '天文发现' },
+  { year: '1781年', title: '约克镇投降', desc: '英军投降，美国独立战争结束。', era: 'industrial', type: 'war', badge: '战争' },
+  { year: '1783年', title: '热气球', desc: '蒙特哥菲尔兄弟发明热气球。', era: 'industrial', type: 'tech', badge: '第一次' },
+  { year: '1784年', title: '双动蒸汽机', desc: '瓦特发明双动蒸汽机。', era: 'industrial', type: 'tech', badge: '发明' },
+  { year: '1785年', title: '动力织布机', desc: '卡特赖特发明动力织布机。', era: 'industrial', type: 'tech', badge: '发明' },
+  { year: '1787年', title: '美国宪法', desc: '美国制宪会议通过宪法。', era: 'industrial', type: 'culture', badge: '里程碑' },
+  { year: '1788年', title: '澳大利亚殖民', desc: '英国在澳大利亚建立殖民地。', era: 'industrial', type: 'culture', badge: '殖民' },
+  { year: '1789年', title: '法国大革命', desc: '法国大革命爆发，攻占巴士底狱。', era: 'industrial', type: 'culture', badge: '革命', detail: '法国大革命传播了自由、平等、博爱的理念，深刻影响了世界。' },
+  { year: '1789年', title: '人权宣言', desc: '法国发表《人权宣言》。', era: 'industrial', type: 'culture', badge: '里程碑' },
+  { year: '1790年', title: '纱厂', desc: '第一家现代纱厂建立。', era: 'industrial', type: 'tech', badge: '工业' },
+  { year: '1791年', title: '伏打电池', desc: '伏打发明电池雏形。', era: 'industrial', type: 'tech', badge: '发明' },
+  { year: '1792年', title: '共和国', desc: '法兰西第一共和国成立。', era: 'industrial', type: 'culture', badge: '革命' },
+  { year: '1793年', title: '轧棉机', desc: '惠特尼发明轧棉机。', era: 'industrial', type: 'tech', badge: '发明' },
+  { year: '1793年', title: '路易十六被处决', desc: '路易十六被处决。', era: 'industrial', type: 'culture', badge: '事件' },
+  { year: '1794年', title: '热月政变', desc: '罗伯斯庇尔被处决。', era: 'industrial', type: 'culture', badge: '事件' },
+  { year: '1795年', title: '度量衡', desc: '法国采用公制。', era: 'industrial', type: 'science', badge: '标准' },
+  { year: '1796年', title: '牛痘疫苗', desc: '詹纳发明牛痘疫苗。', era: 'industrial', type: 'science', badge: '第一次技术', detail: '疫苗的发明拯救了无数生命，是人类医学史上的伟大突破。' },
+  { year: '1798年', title: '埃及远征', desc: '拿破仑远征埃及。', era: 'industrial', type: 'war', badge: '战争' },
+  { year: '1799年', title: '雾月政变', desc: '拿破仑执政。', era: 'industrial', type: 'person', badge: '伟人' },
+  { year: '1800年', title: '伏打电堆', desc: '伏打发明伏打电堆。', era: 'industrial', type: 'tech', badge: '第一次技术' },
+  { year: '1801年', title: '英格兰人口普查', desc: '英国首次人口普查。', era: 'industrial', type: 'culture', badge: '统计' },
+  { year: '1804年', title: '拿破仑称帝', desc: '拿破仑加冕称帝。', era: 'industrial', type: 'person', badge: '伟人' },
+  { year: '1804年', title: '蒸汽机车', desc: '特里维西克制造蒸汽机车。', era: 'industrial', type: 'tech', badge: '发明' },
+  { year: '1807年', title: '蒸汽船', desc: '富尔顿发明蒸汽船。', era: 'industrial', type: 'tech', badge: '发明' },
+  { year: '1807年', title: '废奴', desc: '英国废除奴隶贸易。', era: 'industrial', type: 'culture', badge: '人权' },
+  { year: '1808年', title: '道尔顿原子论', desc: '道尔顿提出原子论。', era: 'industrial', type: 'science', badge: '科学突破' },
+  { year: '1810年', title: '拉丁美洲独立', desc: '拉丁美洲独立运动开始。', era: 'industrial', type: 'culture', badge: '革命' },
+  { year: '1812年', title: '拿破仑侵俄', desc: '拿破仑入侵俄国失败。', era: 'industrial', type: 'war', badge: '战争' },
+  { year: '1814年', title: '斯蒂芬森机车', desc: '斯蒂芬森制造蒸汽机车。', era: 'industrial', type: 'tech', badge: '发明' },
+  { year: '1814年', title: '拿破仑退位', desc: '拿破仑退位。', era: 'industrial', type: 'person', badge: '事件' },
+  { year: '1815年', title: '滑铁卢战役', desc: '拿破仑在滑铁卢战败。', era: 'industrial', type: 'war', badge: '战争' },
+  { year: '1815年', title: '维也纳会议', desc: '维也纳会议召开。', era: 'industrial', type: 'culture', badge: '会议' },
+  { year: '1816年', title: '听诊器', desc: '雷奈克发明听诊器。', era: 'industrial', type: 'tech', badge: '发明' },
+  { year: '1818年', title: '血循环', desc: '血循环理论完善。', era: 'industrial', type: 'science', badge: '科学' },
+  { year: '1819年', title: '玻利瓦尔', desc: '玻利瓦尔解放大哥伦比亚。', era: 'industrial', type: 'person', badge: '伟人' },
+  { year: '1821年', title: '拿破仑去世', desc: '拿破仑去世。', era: 'industrial', type: 'person', badge: '事件' },
+  { year: '1821年', title: '墨西哥独立', desc: '墨西哥独立。', era: 'industrial', type: 'culture', badge: '独立' },
+  { year: '1822年', title: '巴西独立', desc: '巴西独立。', era: 'industrial', type: 'culture', badge: '独立' },
+  { year: '1822年', title: '差分机', desc: '巴贝奇设计差分机。', era: 'industrial', type: 'tech', badge: '发明' },
+  { year: '1823年', title: '门罗主义', desc: '美国宣布门罗主义。', era: 'industrial', type: 'culture', badge: '政策' },
+  { year: '1824年', title: '热力学', desc: '卡诺奠定热力学基础。', era: 'industrial', type: 'science', badge: '科学' },
+  { year: '1825年', title: '第一条铁路', desc: '英国开通第一条公共铁路。', era: 'industrial', type: 'tech', badge: '第一次', detail: '铁路彻底改变了人类的交通方式，加速了工业化进程。' },
+  { year: '1826年', title: '摄影术', desc: '涅普斯拍摄第一张照片。', era: 'industrial', type: 'tech', badge: '第一次' },
+  { year: '1827年', title: '欧姆定律', desc: '欧姆发现欧姆定律。', era: 'industrial', type: 'science', badge: '发现' },
+  { year: '1829年', title: '火箭号', desc: '斯蒂芬森的火箭号机车成功。', era: 'industrial', type: 'tech', badge: '技术' },
+  { year: '1830年', title: '法国七月革命', desc: '法国七月革命。', era: 'industrial', type: 'culture', badge: '革命' },
+  { year: '1831年', title: '电磁感应', desc: '法拉第发现电磁感应。', era: 'industrial', type: 'science', badge: '科学突破', detail: '电磁感应是电气时代的理论基础。' },
+  { year: '1831年', title: '达尔文航行', desc: '达尔文开始环球航行。', era: 'industrial', type: 'person', badge: '伟人' },
+  { year: '1832年', title: '电报机', desc: '莫尔斯发明电报机。', era: 'industrial', type: 'tech', badge: '发明' },
+  { year: '1833年', title: '废奴', desc: '英国废除奴隶制。', era: 'industrial', type: 'culture', badge: '人权' },
+  { year: '1834年', title: '德国关税同盟', desc: '德国关税同盟成立。', era: 'industrial', type: 'culture', badge: '经济' },
+  { year: '1835年', title: '左轮手枪', desc: '柯尔特发明左轮手枪。', era: 'industrial', type: 'tech', badge: '发明' },
+  { year: '1836年', title: '阿拉莫战役', desc: '阿拉莫战役。', era: 'industrial', type: 'war', badge: '战争' },
+  { year: '1837年', title: '维多利亚女王', desc: '维多利亚女王即位。', era: 'industrial', type: 'person', badge: '伟人' },
+  { year: '1837年', title: '电报', desc: '莫尔斯电报成功。', era: 'industrial', type: 'tech', badge: '发明' },
+  { year: '1838年', title: '蒸汽船横渡', desc: '蒸汽船横渡大西洋。', era: 'industrial', type: 'tech', badge: '第一次' },
+  { year: '1839年', title: '摄影术', desc: '达盖尔发明银版摄影法。', era: 'industrial', type: 'tech', badge: '发明' },
+  { year: '1839年', title: '鸦片战争', desc: '鸦片战争爆发。', era: 'industrial', type: 'war', badge: '战争' },
+  { year: '1840年', title: '邮票', desc: '英国发行邮票。', era: 'industrial', type: 'tech', badge: '发明' },
+  { year: '1842年', title: '南京条约', desc: '中英签订《南京条约》。', era: 'industrial', type: 'culture', badge: '条约' },
+  { year: '1843年', title: '无线电通信', desc: '首次无线电通信实验。', era: 'industrial', type: 'tech', badge: '实验' },
+  { year: '1844年', title: '电报通信', desc: '莫尔斯发送第一封电报。', era: 'industrial', type: 'tech', badge: '第一次', detail: '电报使人类首次实现即时远距离通信。' },
+  { year: '1845年', title: '爱尔兰大饥荒', desc: '爱尔兰大饥荒开始。', era: 'industrial', type: 'science', badge: '灾难' },
+  { year: '1846年', title: '麻醉剂', desc: '莫顿首次公开演示麻醉。', era: 'industrial', type: 'science', badge: '第一次' },
+  { year: '1846年', title: '海王星', desc: '发现海王星。', era: 'industrial', type: 'science', badge: '天文发现' },
+  { year: '1848年', title: '共产党宣言', desc: '马克思发表《共产党宣言》。', era: 'industrial', type: 'person', badge: '伟人' },
+  { year: '1848年', title: '欧洲革命', desc: '欧洲革命浪潮。', era: 'industrial', type: 'culture', badge: '革命' },
+  { year: '1849年', title: '淘金热', desc: '加州淘金热。', era: 'industrial', type: 'culture', badge: '事件' },
+  { year: '1850年', title: '人口', desc: '世界人口达到10亿。', era: 'industrial', type: 'science', badge: '人口' },
+  { year: '1851年', title: '水晶宫博览会', desc: '伦敦世博会召开。', era: 'industrial', type: 'culture', badge: '盛会' },
+  { year: '1852年', title: '飞艇', desc: '吉法尔制造飞艇。', era: 'industrial', type: 'tech', badge: '发明' },
+  { year: '1853年', title: '黑船来航', desc: '美国舰队到达日本。', era: 'industrial', type: 'culture', badge: '事件' },
+  { year: '1854年', title: '细菌理论', desc: '巴斯德开始研究发酵。', era: 'industrial', type: 'science', badge: '科学' },
+  { year: '1854年', title: '护理', desc: '南丁格尔改革护理。', era: 'industrial', type: 'person', badge: '伟人' },
+  { year: '1855年', title: '贝塞麦炼钢', desc: '贝塞麦发明炼钢法。', era: 'industrial', type: 'tech', badge: '发明' },
+  { year: '1856年', title: '合成染料', desc: '帕金发明合成染料。', era: 'industrial', type: 'tech', badge: '发明' },
+  { year: '1857年', title: '印度民族起义', desc: '印度民族大起义。', era: 'industrial', type: 'war', badge: '起义' },
+  { year: '1858年', title: '细胞理论', desc: '魏尔肖完善细胞理论。', era: 'industrial', type: 'science', badge: '科学' },
+  { year: '1859年', title: '物种起源', desc: '达尔文发表《物种起源》。', era: 'industrial', type: 'science', badge: '科学革命', detail: '进化论彻底改变了人类对生命和自身的认识。' },
+  { year: '1859年', title: '石油', desc: '德雷克钻出第一口现代油井。', era: 'industrial', type: 'tech', badge: '第一次' },
+  { year: '1860年', title: '内燃机', desc: '勒努瓦发明内燃机。', era: 'industrial', type: 'tech', badge: '发明' },
+  { year: '1861年', title: '美国内战', desc: '美国内战爆发。', era: 'industrial', type: 'war', badge: '战争' },
+  { year: '1861年', title: '俄国农奴制改革', desc: '俄国废除农奴制。', era: 'industrial', type: 'culture', badge: '改革' },
+  { year: '1863年', title: '伦敦地铁', desc: '伦敦地铁开通。', era: 'industrial', type: 'tech', badge: '第一次' },
+  { year: '1863年', title: '红十字会', desc: '红十字会成立。', era: 'industrial', type: 'culture', badge: '组织' },
+  { year: '1864年', title: '第一国际', desc: '第一国际成立。', era: 'industrial', type: 'culture', badge: '组织' },
+  { year: '1865年', title: '遗传定律', desc: '孟德尔发现遗传定律。', era: 'industrial', type: 'science', badge: '科学突破' },
+  { year: '1865年', title: '美国内战结束', desc: '美国内战结束，奴隶制废除。', era: 'industrial', type: 'culture', badge: '事件' },
+  { year: '1866年', title: '大西洋电缆', desc: '大西洋电缆铺设成功。', era: 'industrial', type: 'tech', badge: '第一次' },
+  { year: '1867年', title: '炸药', desc: '诺贝尔发明炸药。', era: 'industrial', type: 'tech', badge: '发明' },
+  { year: '1867年', title: '明治维新', desc: '日本明治维新开始。', era: 'industrial', type: 'culture', badge: '改革' },
+  { year: '1868年', title: '明治时代', desc: '日本进入明治时代。', era: 'industrial', type: 'culture', badge: '时代' },
+  { year: '1869年', title: '苏伊士运河', desc: '苏伊士运河开通。', era: 'industrial', type: 'tech', badge: '工程奇迹' },
+  { year: '1869年', title: '元素周期表', desc: '门捷列夫发表元素周期表。', era: 'industrial', type: 'science', badge: '科学突破' },
+  { year: '1870年', title: '普法战争', desc: '普法战争爆发。', era: 'industrial', type: 'war', badge: '战争' },
+  { year: '1871年', title: '德意志帝国', desc: '德意志帝国成立。', era: 'industrial', type: 'culture', badge: '帝国' },
+  { year: '1871年', title: '巴黎公社', desc: '巴黎公社成立。', era: 'industrial', type: 'culture', badge: '革命' },
+  { year: '1872年', title: '黄石公园', desc: '美国建立第一个国家公园。', era: 'industrial', type: 'culture', badge: '环保' },
+  { year: '1873年', title: '经济危机', desc: '世界经济危机。', era: 'industrial', type: 'culture', badge: '危机' },
+  { year: '1874年', title: '印象派', desc: '印象派画展首次举办。', era: 'industrial', type: 'culture', badge: '艺术' },
+  { year: '1875年', title: '细菌致病', desc: '科赫发现炭疽杆菌。', era: 'industrial', type: 'science', badge: '发现' },
+  { year: '1876年', title: '电话', desc: '贝尔发明电话。', era: 'industrial', type: 'tech', badge: '第一次技术', detail: '电话使人类能够远距离传递声音。' },
+  { year: '1877年', title: '留声机', desc: '爱迪生发明留声机。', era: 'industrial', type: 'tech', badge: '发明' },
+  { year: '1878年', title: '电力', desc: '电力开始用于照明。', era: 'industrial', type: 'tech', badge: '应用' },
+  { year: '1879年', title: '电灯', desc: '爱迪生发明电灯。', era: 'industrial', type: 'tech', badge: '第一次技术', detail: '电灯使人类征服了黑夜。' },
+  { year: '1880年', title: '巴氏消毒', desc: '巴斯德发明巴氏消毒法。', era: 'industrial', type: 'science', badge: '发明' },
+  { year: '1881年', title: '电车', desc: '西门子发明电车。', era: 'industrial', type: 'tech', badge: '发明' },
+  { year: '1882年', title: '发电站', desc: '爱迪生建立发电站。', era: 'industrial', type: 'tech', badge: '第一次' },
+  { year: '1884年', title: '时区', desc: '华盛顿会议确立时区制度。', era: 'industrial', type: 'culture', badge: '标准' },
+  { year: '1885年', title: '汽车', desc: '本茨发明汽车。', era: 'industrial', type: 'tech', badge: '第一次技术', detail: '汽车开启了个人交通的新时代。' },
+  { year: '1885年', title: '狂犬疫苗', desc: '巴斯德发明狂犬疫苗。', era: 'industrial', type: 'science', badge: '发明' },
+  { year: '1886年', title: '自由女神像', desc: '自由女神像落成。', era: 'industrial', type: 'culture', badge: '地标' },
+  { year: '1887年', title: '以太漂移', desc: '迈克尔逊-莫雷实验。', era: 'industrial', type: 'science', badge: '实验' },
+  { year: '1888年', title: '交流电', desc: '特斯拉发明交流电系统。', era: 'industrial', type: 'tech', badge: '技术革新' },
+  { year: '1889年', title: '埃菲尔铁塔', desc: '埃菲尔铁塔建成。', era: 'industrial', type: 'tech', badge: '建筑奇迹' },
+  { year: '1890年', title: '图灵', desc: '图灵诞生。', era: 'industrial', type: 'person', badge: '伟人' },
+  { year: '1892年', title: '柴油机', desc: '狄塞尔发明柴油机。', era: 'industrial', type: 'tech', badge: '发明' },
+  { year: '1894年', title: '甲午战争', desc: '中日甲午战争爆发。', era: 'industrial', type: 'war', badge: '战争' },
+  { year: '1895年', title: 'X射线', desc: '伦琴发现X射线。', era: 'industrial', type: 'science', badge: '第一次', detail: 'X射线的发现开创了放射医学。' },
+  { year: '1895年', title: '电影', desc: '卢米埃尔兄弟首次公映电影。', era: 'industrial', type: 'tech', badge: '第一次' },
+  { year: '1896年', title: '放射性', desc: '贝克勒尔发现放射性。', era: 'industrial', type: 'science', badge: '发现' },
+  { year: '1896年', title: '奥运会', desc: '第一届现代奥运会举行。', era: 'industrial', type: 'culture', badge: '盛会' },
+  { year: '1897年', title: '电子', desc: '汤姆逊发现电子。', era: 'industrial', type: 'science', badge: '科学突破' },
+  { year: '1898年', title: '居里夫妇', desc: '居里夫妇发现镭和钋。', era: 'industrial', type: 'science', badge: '发现' },
+  { year: '1898年', title: '戊戌变法', desc: '中国戊戌变法。', era: 'industrial', type: 'culture', badge: '改革' },
+  { year: '1899年', title: '义和团', desc: '义和团运动。', era: 'industrial', type: 'culture', badge: '事件' },
+  
+  // ===== 现代时代 (扩充) =====
+  { year: '1900年', title: '量子理论', desc: '普朗克提出量子理论。', era: 'modern', type: 'science', badge: '科学革命' },
+  { year: '1900年', title: '义和团运动', desc: '八国联军侵华。', era: 'modern', type: 'war', badge: '战争' },
+  { year: '1901年', title: '无线电', desc: '马可尼实现跨大西洋无线电通信。', era: 'modern', type: 'tech', badge: '第一次' },
+  { year: '1901年', title: '诺贝尔奖', desc: '首届诺贝尔奖颁发。', era: 'modern', type: 'culture', badge: '奖项' },
+  { year: '1902年', title: '空调', desc: '开利发明空调。', era: 'modern', type: 'tech', badge: '发明' },
+  { year: '1903年', title: '飞机', desc: '莱特兄弟首次动力飞行。', era: 'modern', type: 'tech', badge: '第一次技术', detail: '飞机的发明开启了航空时代。' },
+  { year: '1904年', title: '日俄战争', desc: '日俄战争爆发。', era: 'modern', type: 'war', badge: '战争' },
+  { year: '1905年', title: '狭义相对论', desc: '爱因斯坦发表狭义相对论。', era: 'modern', type: 'science', badge: '科学革命', detail: '相对论彻底改变了人类对时空的认识。' },
+  { year: '1905年', title: '俄国革命', desc: '俄国1905年革命。', era: 'modern', type: 'culture', badge: '革命' },
+  { year: '1906年', title: '旧金山地震', desc: '旧金山大地震。', era: 'modern', type: 'science', badge: '灾难' },
+  { year: '1907年', title: '塑料', desc: '贝克兰发明塑料。', era: 'modern', type: 'tech', badge: '发明' },
+  { year: '1908年', title: '通古斯大爆炸', desc: '通古斯大爆炸。', era: 'modern', type: 'science', badge: '事件' },
+  { year: '1908年', title: 'T型车', desc: '福特T型车量产。', era: 'modern', type: 'tech', badge: '工业革命' },
+  { year: '1909年', title: '飞越英吉利海峡', desc: '布莱里奥飞越英吉利海峡。', era: 'modern', type: 'tech', badge: '第一次' },
+  { year: '1910年', title: '辛亥革命', desc: '中国辛亥革命爆发。', era: 'modern', type: 'culture', badge: '革命' },
+  { year: '1911年', title: '原子核', desc: '卢瑟福发现原子核。', era: 'modern', type: 'science', badge: '发现' },
+  { year: '1911年', title: '阿蒙森', desc: '阿蒙森到达南极点。', era: 'modern', type: 'tech', badge: '探索' },
+  { year: '1912年', title: '中华民国', desc: '中华民国成立。', era: 'modern', type: 'culture', badge: '国家' },
+  { year: '1912年', title: '泰坦尼克号', desc: '泰坦尼克号沉没。', era: 'modern', type: 'culture', badge: '灾难' },
+  { year: '1912年', title: '大陆漂移', desc: '魏格纳提出大陆漂移说。', era: 'modern', type: 'science', badge: '理论' },
+  { year: '1913年', title: '玻尔原子模型', desc: '玻尔提出原子模型。', era: 'modern', type: 'science', badge: '科学突破' },
+  { year: '1913年', title: '流水线', desc: '福特建立流水线。', era: 'modern', type: 'tech', badge: '工业革命' },
+  { year: '1914年', title: '巴拿马运河', desc: '巴拿马运河开通。', era: 'modern', type: 'tech', badge: '工程奇迹' },
+  { year: '1914年', title: '一战爆发', desc: '第一次世界大战爆发。', era: 'modern', type: 'war', badge: '世界大战', detail: '第一次世界大战彻底改变了世界格局。' },
+  { year: '1915年', title: '广义相对论', desc: '爱因斯坦发表广义相对论。', era: 'modern', type: 'science', badge: '科学革命' },
+  { year: '1915年', title: '毒气战', desc: '首次大规模毒气战。', era: 'modern', type: 'war', badge: '灾难' },
+  { year: '1916年', title: '日德兰海战', desc: '日德兰海战。', era: 'modern', type: 'war', badge: '战争' },
+  { year: '1916年', title: '索姆河战役', desc: '索姆河战役，坦克首次使用。', era: 'modern', type: 'war', badge: '第一次' },
+  { year: '1917年', title: '俄国革命', desc: '俄国十月革命。', era: 'modern', type: 'culture', badge: '革命', detail: '十月革命建立了世界上第一个社会主义国家。' },
+  { year: '1918年', title: '一战结束', desc: '第一次世界大战结束。', era: 'modern', type: 'war', badge: '事件' },
+  { year: '1918年', title: '西班牙流感', desc: '西班牙流感大流行。', era: 'modern', type: 'science', badge: '灾难' },
+  { year: '1919年', title: '凡尔赛条约', desc: '凡尔赛条约签订。', era: 'modern', type: 'culture', badge: '条约' },
+  { year: '1919年', title: '五四运动', desc: '中国五四运动。', era: 'modern', type: 'culture', badge: '革命' },
+  { year: '1919年', title: '日食验证', desc: '爱丁顿验证广义相对论。', era: 'modern', type: 'science', badge: '验证' },
+  { year: '1920年', title: '国际联盟', desc: '国际联盟成立。', era: 'modern', type: 'culture', badge: '组织' },
+  { year: '1920年', title: '妇女选举权', desc: '美国妇女获得选举权。', era: 'modern', type: 'culture', badge: '人权' },
+  { year: '1921年', title: '中国共产党成立', desc: '中国共产党成立。', era: 'modern', type: 'culture', badge: '事件' },
+  { year: '1922年', title: '胰岛素', desc: '班廷发现胰岛素。', era: 'modern', type: 'science', badge: '发明' },
+  { year: '1922年', title: '埃及独立', desc: '埃及独立。', era: 'modern', type: 'culture', badge: '独立' },
+  { year: '1922年', title: '图坦卡蒙墓', desc: '发现图坦卡蒙墓。', era: 'modern', type: 'culture', badge: '考古' },
+  { year: '1923年', title: '东京地震', desc: '关东大地震。', era: 'modern', type: 'science', badge: '灾难' },
+  { year: '1924年', title: '列宁去世', desc: '列宁去世。', era: 'modern', type: 'person', badge: '事件' },
+  { year: '1924年', title: '电视', desc: '贝尔德展示电视。', era: 'modern', type: 'tech', badge: '发明' },
+  { year: '1926年', title: '火箭', desc: '戈达德发射液体火箭。', era: 'modern', type: 'tech', badge: '第一次' },
+  { year: '1927年', title: '林德伯格', desc: '林德伯格独自飞越大西洋。', era: 'modern', type: 'tech', badge: '第一次' },
+  { year: '1927年', title: '量子力学', desc: '量子力学建立。', era: 'modern', type: 'science', badge: '科学革命' },
+  { year: '1928年', title: '青霉素', desc: '弗莱明发现青霉素。', era: 'modern', type: 'science', badge: '第一次技术', detail: '青霉素开创了抗生素时代。' },
+  { year: '1928年', title: '青霉素', desc: '弗莱明发现青霉素。', era: 'modern', type: 'science', badge: '第一次技术' },
+  { year: '1929年', title: '大萧条', desc: '美国股市崩盘，大萧条开始。', era: 'modern', type: 'culture', badge: '灾难' },
+  { year: '1929年', title: '哈勃定律', desc: '哈勃发现宇宙膨胀。', era: 'modern', type: 'science', badge: '发现' },
+  { year: '1930年', title: '冥王星', desc: '发现冥王星。', era: 'modern', type: 'science', badge: '天文发现' },
+  { year: '1930年', title: '甘地食盐长征', desc: '甘地食盐长征。', era: 'modern', type: 'person', badge: '伟人' },
+  { year: '1931年', title: '九一八事变', desc: '九一八事变。', era: 'modern', type: 'war', badge: '战争' },
+  { year: '1931年', title: '帝国大厦', desc: '帝国大厦建成。', era: 'modern', type: 'tech', badge: '建筑' },
+  { year: '1932年', title: '中子', desc: '查德威克发现中子。', era: 'modern', type: 'science', badge: '发现' },
+  { year: '1933年', title: '罗斯福新政', desc: '罗斯福新政开始。', era: 'modern', type: 'culture', badge: '改革' },
+  { year: '1933年', title: '希特勒上台', desc: '希特勒成为德国总理。', era: 'modern', type: 'person', badge: '事件' },
+  { year: '1934年', title: '长征', desc: '中国工农红军长征。', era: 'modern', type: 'culture', badge: '事件' },
+  { year: '1935年', title: '雷达', desc: '沃森-瓦特发明雷达。', era: 'modern', type: 'tech', badge: '发明' },
+  { year: '1936年', title: '图灵机', desc: '图灵提出图灵机概念。', era: 'modern', type: 'science', badge: '理论奠基' },
+  { year: '1936年', title: '西班牙内战', desc: '西班牙内战爆发。', era: 'modern', type: 'war', badge: '战争' },
+  { year: '1937年', title: '七七事变', desc: '七七事变，全面抗战开始。', era: 'modern', type: 'war', badge: '战争' },
+  { year: '1937年', title: '兴登堡号', desc: '兴登堡号空难。', era: 'modern', type: 'culture', badge: '灾难' },
+  { year: '1938年', title: '核裂变', desc: '哈恩发现核裂变。', era: 'modern', type: 'science', badge: '发现' },
+  { year: '1939年', title: '二战爆发', desc: '第二次世界大战爆发。', era: 'modern', type: 'war', badge: '世界大战', detail: '第二次世界大战是人类历史上最惨烈的战争。' },
+  { year: '1940年', title: '不列颠空战', desc: '不列颠空战。', era: 'modern', type: 'war', badge: '战争' },
+  { year: '1941年', title: '珍珠港', desc: '日本偷袭珍珠港。', era: 'modern', type: 'war', badge: '战争' },
+  { year: '1942年', title: '曼哈顿计划', desc: '曼哈顿计划开始。', era: 'modern', type: 'tech', badge: '项目' },
+  { year: '1942年', title: '中途岛战役', desc: '中途岛战役。', era: 'modern', type: 'war', badge: '战争' },
+  { year: '1943年', title: '青霉素量产', desc: '青霉素大规模生产。', era: 'modern', type: 'science', badge: '应用' },
+  { year: '1944年', title: '诺曼底登陆', desc: '诺曼底登陆。', era: 'modern', type: 'war', badge: '战争' },
+  { year: '1944年', title: '布雷顿森林', desc: '布雷顿森林会议。', era: 'modern', type: 'culture', badge: '会议' },
+  { year: '1945年', title: '原子弹', desc: '广岛和长崎原子弹爆炸。', era: 'modern', type: 'tech', badge: '第一次技术', detail: '核武器的出现改变了战争的性质。' },
+  { year: '1945年', title: '二战结束', desc: '第二次世界大战结束。', era: 'modern', type: 'war', badge: '事件' },
+  { year: '1945年', title: '联合国成立', desc: '联合国成立。', era: 'modern', type: 'culture', badge: '组织' },
+  { year: '1946年', title: 'ENIAC', desc: 'ENIAC电子计算机诞生。', era: 'modern', type: 'tech', badge: '第一次技术', detail: 'ENIAC开启了信息时代的序幕。' },
+  { year: '1946年', title: '冷战开始', desc: '丘吉尔铁幕演说。', era: 'modern', type: 'culture', badge: '时代' },
+  { year: '1947年', title: '晶体管', desc: '肖克利发明晶体管。', era: 'modern', type: 'tech', badge: '第一次技术', detail: '晶体管是微电子时代的基石。' },
+  { year: '1947年', title: '印巴分治', desc: '印度和巴基斯坦独立。', era: 'modern', type: 'culture', badge: '独立' },
+  { year: '1948年', title: '以色列建国', desc: '以色列建国。', era: 'modern', type: 'culture', badge: '国家' },
+  { year: '1948年', title: '柏林封锁', desc: '柏林封锁。', era: 'modern', type: 'culture', badge: '事件' },
+  { year: '1948年', title: '世界人权宣言', desc: '联合国通过世界人权宣言。', era: 'modern', type: 'culture', badge: '里程碑' },
+  { year: '1949年', title: '中华人民共和国', desc: '中华人民共和国成立。', era: 'modern', type: 'culture', badge: '国家' },
+  { year: '1949年', title: '北约', desc: '北约成立。', era: 'modern', type: 'culture', badge: '组织' },
+  { year: '1950年', title: '朝鲜战争', desc: '朝鲜战争爆发。', era: 'modern', type: 'war', badge: '战争' },
+  { year: '1951年', title: '电视普及', desc: '电视开始普及。', era: 'modern', type: 'tech', badge: '应用' },
+  { year: '1952年', title: '氢弹', desc: '美国试验氢弹。', era: 'modern', type: 'tech', badge: '武器' },
+  { year: '1953年', title: 'DNA双螺旋', desc: '沃森和克里克发现DNA结构。', era: 'modern', type: 'science', badge: '科学突破', detail: 'DNA结构的发现开启了分子生物学时代。' },
+  { year: '1953年', title: '斯大林去世', desc: '斯大林去世。', era: 'modern', type: 'person', badge: '事件' },
+  { year: '1954年', title: '疫苗', desc: '索尔克脊髓灰质炎疫苗。', era: 'modern', type: 'science', badge: '发明' },
+  { year: '1954年', title: '日内瓦会议', desc: '日内瓦会议。', era: 'modern', type: 'culture', badge: '会议' },
+  { year: '1955年', title: '万隆会议', desc: '万隆会议。', era: 'modern', type: 'culture', badge: '会议' },
+  { year: '1956年', title: '人工智能', desc: '达特茅斯会议，AI诞生。', era: 'modern', type: 'science', badge: '第一次', detail: '人工智能的概念在这次会议上首次提出。' },
+  { year: '1956年', title: '苏伊士危机', desc: '苏伊士运河危机。', era: 'modern', type: 'war', badge: '事件' },
+  { year: '1957年', title: '人造卫星', desc: '苏联发射第一颗人造卫星。', era: 'modern', type: 'tech', badge: '第一次技术', detail: '人类进入太空时代。' },
+  { year: '1957年', title: '罗马条约', desc: '欧洲经济共同体成立。', era: 'modern', type: 'culture', badge: '组织' },
+  { year: '1958年', title: '集成电路', desc: '基尔比发明集成电路。', era: 'modern', type: 'tech', badge: '第一次技术' },
+  { year: '1959年', title: '古巴革命', desc: '卡斯特罗古巴革命成功。', era: 'modern', type: 'culture', badge: '革命' },
+  { year: '1960年', title: '激光', desc: '梅曼制造第一台激光器。', era: 'modern', type: 'tech', badge: '第一次技术' },
+  { year: '1960年', title: '非洲独立年', desc: '17个非洲国家独立。', era: 'modern', type: 'culture', badge: '独立' },
+  { year: '1961年', title: '加加林', desc: '加加林成为第一个进入太空的人类。', era: 'modern', type: 'tech', badge: '第一次', detail: '人类进入太空，是探索精神的伟大胜利。' },
+  { year: '1961年', title: '柏林墙', desc: '柏林墙建立。', era: 'modern', type: 'culture', badge: '事件' },
+  { year: '1962年', title: '古巴导弹危机', desc: '古巴导弹危机。', era: 'modern', type: 'war', badge: '危机' },
+  { year: '1962年', title: '环境运动', desc: '《寂静的春天》出版。', era: 'modern', type: 'culture', badge: '环保' },
+  { year: '1963年', title: '马丁·路德·金', desc: '我有一个梦想演讲。', era: 'modern', type: 'person', badge: '伟人' },
+  { year: '1963年', title: '肯尼迪遇刺', desc: '肯尼迪遇刺。', era: 'modern', type: 'person', badge: '事件' },
+  { year: '1964年', title: '中国原子弹', desc: '中国第一颗原子弹爆炸。', era: 'modern', type: 'tech', badge: '第一次' },
+  { year: '1964年', title: 'IBM 360', desc: 'IBM System/360发布。', era: 'modern', type: 'tech', badge: '技术' },
+  { year: '1965年', title: '宇宙微波背景', desc: '发现宇宙微波背景辐射。', era: 'modern', type: 'science', badge: '发现' },
+  { year: '1966年', title: '文化大革命', desc: '中国文化大革命开始。', era: 'modern', type: 'culture', badge: '事件' },
+  { year: '1967年', title: '心脏移植', desc: '首例心脏移植手术。', era: 'modern', type: 'science', badge: '第一次' },
+  { year: '1967年', title: '六日战争', desc: '六日战争。', era: 'modern', type: 'war', badge: '战争' },
+  { year: '1968年', title: '布拉格之春', desc: '布拉格之春。', era: 'modern', type: 'culture', badge: '事件' },
+  { year: '1968年', title: '阿波罗8号', desc: '人类首次绕月飞行。', era: 'modern', type: 'tech', badge: '第一次' },
+  { year: '1969年', title: '登月', desc: '阿波罗11号登月。', era: 'modern', type: 'tech', badge: '第一次', detail: '人类踏上月球，是探索精神的巅峰。' },
+  { year: '1969年', title: 'ARPANET', desc: 'ARPANET建立。', era: 'modern', type: 'tech', badge: '第一次技术' },
+  { year: '1970年', title: '地球日', desc: '第一个地球日。', era: 'modern', type: 'culture', badge: '环保' },
+  { year: '1971年', title: '微处理器', desc: '英特尔发布4004。', era: 'modern', type: 'tech', badge: '第一次技术' },
+  { year: '1971年', title: '中国重返联合国', desc: '中国重返联合国。', era: 'modern', type: 'culture', badge: '事件' },
+  { year: '1972年', title: '尼克松访华', desc: '尼克松访华。', era: 'modern', type: 'culture', badge: '事件' },
+  { year: '1972年', title: 'CT扫描', desc: 'CT扫描仪发明。', era: 'modern', type: 'tech', badge: '发明' },
+  { year: '1973年', title: '手机', desc: '库珀打通第一个手机电话。', era: 'modern', type: 'tech', badge: '第一次技术' },
+  { year: '1973年', title: '石油危机', desc: '石油危机。', era: 'modern', type: 'culture', badge: '危机' },
+  { year: '1974年', title: '兵马俑', desc: '发现兵马俑。', era: 'modern', type: 'culture', badge: '考古' },
+  { year: '1975年', title: '微软', desc: '微软成立。', era: 'modern', type: 'tech', badge: '企业' },
+  { year: '1975年', title: '越战结束', desc: '越南战争结束。', era: 'modern', type: 'war', badge: '事件' },
+  { year: '1976年', title: '苹果', desc: '苹果公司成立。', era: 'modern', type: 'tech', badge: '企业' },
+  { year: '1976年', title: '毛泽东去世', desc: '毛泽东去世。', era: 'modern', type: 'person', badge: '事件' },
+  { year: '1977年', title: '个人电脑', desc: 'Apple II发布。', era: 'modern', type: 'tech', badge: '第一次技术' },
+  { year: '1978年', title: '试管婴儿', desc: '第一个试管婴儿诞生。', era: 'modern', type: 'science', badge: '第一次' },
+  { year: '1978年', title: '改革开放', desc: '中国改革开放。', era: 'modern', type: 'culture', badge: '改革' },
+  { year: '1979年', title: '中越战争', desc: '中越战争。', era: 'modern', type: 'war', badge: '战争' },
+  { year: '1979年', title: '伊朗革命', desc: '伊朗伊斯兰革命。', era: 'modern', type: 'culture', badge: '革命' },
+  { year: '1980年', title: '天花消灭', desc: '世界卫生组织宣布天花消灭。', era: 'modern', type: 'science', badge: '成就' },
+  { year: '1980年', title: '波兰团结工会', desc: '团结工会成立。', era: 'modern', type: 'culture', badge: '事件' },
+  { year: '1981年', title: 'PC', desc: 'IBM PC发布。', era: 'modern', type: 'tech', badge: '技术' },
+  { year: '1981年', title: '航天飞机', desc: '哥伦比亚号首飞。', era: 'modern', type: 'tech', badge: '第一次' },
+  { year: '1981年', title: '艾滋病', desc: '艾滋病首次被确认。', era: 'modern', type: 'science', badge: '发现' },
+  { year: '1982年', title: 'CD', desc: 'CD发布。', era: 'modern', type: 'tech', badge: '发明' },
+  { year: '1983年', title: '互联网', desc: 'TCP/IP成为标准。', era: 'modern', type: 'tech', badge: '第一次技术' },
+  { year: '1984年', title: 'DNA指纹', desc: 'DNA指纹技术发明。', era: 'modern', type: 'science', badge: '发明' },
+  { year: '1985年', title: 'Windows', desc: 'Windows 1.0发布。', era: 'modern', type: 'tech', badge: '技术' },
+  { year: '1985年', title: '戈尔巴乔夫', desc: '戈尔巴乔夫改革。', era: 'modern', type: 'person', badge: '伟人' },
+  { year: '1986年', title: '切尔诺贝利', desc: '切尔诺贝利核事故。', era: 'modern', type: 'science', badge: '灾难' },
+  { year: '1986年', title: '挑战者号', desc: '挑战者号爆炸。', era: 'modern', type: 'tech', badge: '灾难' },
+  { year: '1987年', title: '大崩盘', desc: '黑色星期一。', era: 'modern', type: 'culture', badge: '危机' },
+  { year: '1988年', title: '霍金', desc: '《时间简史》出版。', era: 'modern', type: 'person', badge: '伟人' },
+  { year: '1989年', title: '万维网', desc: '蒂姆·伯纳斯-李发明万维网。', era: 'modern', type: 'tech', badge: '第一次技术', detail: '万维网改变了人类的信息交流方式。' },
+  { year: '1989年', title: '柏林墙倒塌', desc: '柏林墙倒塌。', era: 'modern', type: 'culture', badge: '事件' },
+  { year: '1990年', title: '哈勃望远镜', desc: '哈勃望远镜发射。', era: 'modern', type: 'tech', badge: '第一次' },
+  { year: '1990年', title: '德国统一', desc: '德国统一。', era: 'modern', type: 'culture', badge: '统一' },
+  { year: '1991年', title: '苏联解体', desc: '苏联解体。', era: 'modern', type: 'culture', badge: '事件' },
+  { year: '1991年', title: '万维网公开', desc: '万维网向公众开放。', era: 'modern', type: 'tech', badge: '第一次' },
+  { year: '1991年', title: '海湾战争', desc: '海湾战争。', era: 'modern', type: 'war', badge: '战争' },
+  { year: '1992年', title: '欧洲联盟', desc: '欧盟成立。', era: 'modern', type: 'culture', badge: '组织' },
+  { year: '1993年', title: 'Mosaic', desc: 'Mosaic浏览器发布。', era: 'modern', type: 'tech', badge: '技术' },
+  { year: '1994年', title: '种族隔离结束', desc: '南非种族隔离结束。', era: 'modern', type: 'culture', badge: '人权' },
+  { year: '1994年', title: '亚马逊', desc: '亚马逊成立。', era: 'modern', type: 'tech', badge: '企业' },
+  { year: '1995年', title: 'Windows 95', desc: 'Windows 95发布。', era: 'modern', type: 'tech', badge: '技术' },
+  { year: '1995年', title: '克隆羊', desc: '多莉羊诞生。', era: 'modern', type: 'science', badge: '第一次' },
+  { year: '1996年', title: '深蓝', desc: '深蓝击败卡斯帕罗夫。', era: 'modern', type: 'tech', badge: '第一次' },
+  { year: '1997年', title: '香港回归', desc: '香港回归中国。', era: 'modern', type: 'culture', badge: '事件' },
+  { year: '1998年', title: '谷歌', desc: '谷歌成立。', era: 'modern', type: 'tech', badge: '企业' },
+  { year: '1998年', title: '国际空间站', desc: '国际空间站开始建造。', era: 'modern', type: 'tech', badge: '项目' },
+  { year: '1999年', title: '欧元', desc: '欧元启动。', era: 'modern', type: 'culture', badge: '经济' },
+  
+  // ===== 当代 (扩充) =====
+  { year: '2000年', title: '千禧年', desc: '千禧年庆典。', era: 'contemporary', type: 'culture', badge: '时代' },
+  { year: '2000年', title: '人类基因组', desc: '人类基因组计划完成草图。', era: 'contemporary', type: 'science', badge: '科学突破' },
+  { year: '2001年', title: '维基百科', desc: '维基百科上线。', era: 'contemporary', type: 'tech', badge: '第一次' },
+  { year: '2001年', title: '911', desc: '911恐怖袭击。', era: 'contemporary', type: 'war', badge: '灾难' },
+  { year: '2001年', title: 'iPod', desc: '苹果发布iPod。', era: 'contemporary', type: 'tech', badge: '发明' },
+  { year: '2001年', title: '阿富汗战争', desc: '阿富汗战争开始。', era: 'contemporary', type: 'war', badge: '战争' },
+  { year: '2002年', title: '欧元流通', desc: '欧元纸币流通。', era: 'contemporary', type: 'culture', badge: '经济' },
+  { year: '2003年', title: '人类基因组完成', desc: '人类基因组计划完成。', era: 'contemporary', type: 'science', badge: '里程碑', detail: '人类首次完整解读了生命密码。' },
+  { year: '2003年', title: '伊拉克战争', desc: '伊拉克战争开始。', era: 'contemporary', type: 'war', badge: '战争' },
+  { year: '2003年', title: '火星车', desc: '勇气号和机遇号登陆火星。', era: 'contemporary', type: 'tech', badge: '探索' },
+  { year: '2003年', title: 'SARS', desc: 'SARS爆发。', era: 'contemporary', type: 'science', badge: '灾难' },
+  { year: '2004年', title: 'Facebook', desc: 'Facebook成立。', era: 'contemporary', type: 'tech', badge: '第一次技术' },
+  { year: '2004年', title: '印度洋海啸', desc: '印度洋大海啸。', era: 'contemporary', type: 'science', badge: '灾难' },
+  { year: '2005年', title: 'YouTube', desc: 'YouTube上线。', era: 'contemporary', type: 'tech', badge: '第一次' },
+  { year: '2006年', title: 'Twitter', desc: 'Twitter上线。', era: 'contemporary', type: 'tech', badge: '第一次' },
+  { year: '2006年', title: '冥王星降级', desc: '冥王星被降级为矮行星。', era: 'contemporary', type: 'science', badge: '事件' },
+  { year: '2007年', title: 'iPhone', desc: '苹果发布iPhone。', era: 'contemporary', type: 'tech', badge: '第一次技术', detail: '智能手机改变了人类的生活方式。' },
+  { year: '2007年', title: '金融危机', desc: '全球金融危机开始。', era: 'contemporary', type: 'culture', badge: '危机' },
+  { year: '2008年', title: '北京奥运会', desc: '北京奥运会。', era: 'contemporary', type: 'culture', badge: '盛会' },
+  { year: '2008年', title: '比特币', desc: '中本聪发布比特币白皮书。', era: 'contemporary', type: 'tech', badge: '第一次技术' },
+  { year: '2008年', title: 'LHC', desc: '大型强子对撞机启动。', era: 'contemporary', type: 'science', badge: '装置' },
+  { year: '2009年', title: '比特币诞生', desc: '比特币网络启动。', era: 'contemporary', type: 'tech', badge: '第一次' },
+  { year: '2010年', title: 'iPad', desc: '苹果发布iPad。', era: 'contemporary', type: 'tech', badge: '第一次' },
+  { year: '2010年', title: '阿拉伯之春', desc: '阿拉伯之春。', era: 'contemporary', type: 'culture', badge: '革命' },
+  { year: '2011年', title: '福岛核事故', desc: '福岛核事故。', era: 'contemporary', type: 'science', badge: '灾难' },
+  { year: '2011年', title: '本拉登被击毙', desc: '本拉登被击毙。', era: 'contemporary', type: 'war', badge: '事件' },
+  { year: '2011年', title: '叙利亚内战', desc: '叙利亚内战开始。', era: 'contemporary', type: 'war', badge: '战争' },
+  { year: '2012年', title: '希格斯玻色子', desc: '发现希格斯玻色子。', era: 'contemporary', type: 'science', badge: '第一次', detail: '希格斯玻色子的发现证实了标准模型。' },
+  { year: '2012年', title: 'CRISPR', desc: 'CRISPR基因编辑技术发明。', era: 'contemporary', type: 'science', badge: '第一次技术', detail: '基因编辑使精确修改基因成为可能。' },
+  { year: '2012年', title: '好奇号', desc: '好奇号登陆火星。', era: 'contemporary', type: 'tech', badge: '探索' },
+  { year: '2013年', title: '斯诺登', desc: '斯诺登曝光棱镜计划。', era: 'contemporary', type: 'culture', badge: '事件' },
+  { year: '2014年', title: '罗塞塔', desc: '罗塞塔登陆彗星。', era: 'contemporary', type: 'tech', badge: '第一次' },
+  { year: '2014年', title: '冰桶挑战', desc: '冰桶挑战。', era: 'contemporary', type: 'culture', badge: '事件' },
+  { year: '2014年', title: 'ISIS', desc: 'ISIS崛起。', era: 'contemporary', type: 'war', badge: '战争' },
+  { year: '2015年', title: '引力波', desc: 'LIGO探测到引力波。', era: 'contemporary', type: 'science', badge: '第一次', detail: '引力波的探测验证了爱因斯坦的预言。' },
+  { year: '2015年', title: '巴黎协定', desc: '巴黎气候协定签署。', era: 'contemporary', type: 'culture', badge: '条约' },
+  { year: '2016年', title: 'AlphaGo', desc: 'AlphaGo击败李世石。', era: 'contemporary', type: 'tech', badge: '第一次', detail: '人工智能在围棋领域击败人类。' },
+  { year: '2016年', title: '英国脱欧', desc: '英国脱欧公投。', era: 'contemporary', type: 'culture', badge: '事件' },
+  { year: '2016年', title: '特朗普当选', desc: '特朗普当选美国总统。', era: 'contemporary', type: 'culture', badge: '事件' },
+  { year: '2017年', title: '比特币暴涨', desc: '比特币价格突破2万美元。', era: 'contemporary', type: 'tech', badge: '事件' },
+  { year: '2017年', title: '#MeToo', desc: '#MeToo运动。', era: 'contemporary', type: 'culture', badge: '运动' },
+  { year: '2018年', title: '基因编辑婴儿', desc: '基因编辑婴儿事件。', era: 'contemporary', type: 'science', badge: '争议' },
+  { year: '2019年', title: '黑洞照片', desc: '首张黑洞照片发布。', era: 'contemporary', type: 'science', badge: '第一次', detail: '人类首次看到黑洞的真面目。' },
+  { year: '2019年', title: '5G', desc: '5G网络商用。', era: 'contemporary', type: 'tech', badge: '技术' },
+  { year: '2019年', title: '香港事件', desc: '香港事件。', era: 'contemporary', type: 'culture', badge: '事件' },
+  { year: '2020年', title: '新冠疫情', desc: 'COVID-19全球大流行。', era: 'contemporary', type: 'science', badge: '灾难', detail: '新冠疫情深刻改变了世界。' },
+  { year: '2020年', title: 'mRNA疫苗', desc: 'mRNA疫苗研发成功。', era: 'contemporary', type: 'science', badge: '第一次技术', detail: 'mRNA疫苗开创了疫苗学的新纪元。' },
+  { year: '2020年', title: 'SpaceX载人', desc: 'SpaceX载人航天。', era: 'contemporary', type: 'tech', badge: '第一次' },
+  { year: '2021年', title: '韦伯望远镜', desc: '韦伯望远镜发射。', era: 'contemporary', type: 'tech', badge: '探索', detail: '韦伯望远镜是最强大的太空望远镜。' },
+  { year: '2021年', title: '火星直升机', desc: '机智号在火星首飞。', era: 'contemporary', type: 'tech', badge: '第一次' },
+  { year: '2021年', title: '元宇宙', desc: '元宇宙概念流行。', era: 'contemporary', type: 'tech', badge: '概念' },
+  { year: '2021年', title: 'NFT', desc: 'NFT艺术爆发。', era: 'contemporary', type: 'tech', badge: '事件' },
+  { year: '2022年', title: '韦伯首图', desc: '韦伯望远镜传回首批图像。', era: 'contemporary', type: 'science', badge: '探索' },
+  { year: '2022年', title: 'ChatGPT', desc: 'ChatGPT发布。', era: 'contemporary', type: 'tech', badge: '第一次', detail: 'ChatGPT引发了AI革命。' },
+  { year: '2022年', title: '核聚变突破', desc: '美国实现核聚变点火。', era: 'contemporary', type: 'science', badge: '第一次', detail: '人类首次实现核聚变能量增益。' },
+  { year: '2022年', title: '俄乌战争', desc: '俄乌战争爆发。', era: 'contemporary', type: 'war', badge: '战争' },
+  { year: '2023年', title: 'GPT-4', desc: 'GPT-4发布。', era: 'contemporary', type: 'tech', badge: '技术' },
+  { year: '2023年', title: '室温超导', desc: '室温超导研究。', era: 'contemporary', type: 'science', badge: '研究' },
+  { year: '2023年', title: '印度登月', desc: '印度月船3号登陆月球南极。', era: 'contemporary', type: 'tech', badge: '第一次' },
+  { year: '2023年', title: 'AI法案', desc: '欧盟通过AI法案。', era: 'contemporary', type: 'culture', badge: '法规' },
+  { year: '2024年', title: 'Sora', desc: 'OpenAI发布Sora。', era: 'contemporary', type: 'tech', badge: '技术' },
+  { year: '未来', title: '下一个里程碑', desc: '量子计算、核聚变能源、火星殖民、脑机接口......未来正等待我们去创造。', era: 'contemporary', type: 'culture', badge: '未来' }
+];
+
+// ==================== 核心功能 ====================
+
+// 进入时间线
+function enterTimeline() {
+  document.getElementById('heroSection').style.display = 'none';
+  document.getElementById('timelineContainer').classList.remove('hidden');
+  document.getElementById('backBtn').classList.remove('hidden');
+  document.getElementById('sideNav').classList.remove('hidden');
+  renderTimeline();
+  initParticles();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// 返回主页
+function goBack() {
+  document.getElementById('heroSection').style.display = 'flex';
+  document.getElementById('timelineContainer').classList.add('hidden');
+  document.getElementById('backBtn').classList.add('hidden');
+  document.getElementById('sideNav').classList.add('hidden');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// 返回顶部
+function scrollToTop() {
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// 关闭模态框
+function closeModal() {
+  document.getElementById('detailModal').classList.remove('active');
+}
+
+// 移动端菜单
+document.getElementById('menuToggle').addEventListener('click', () => {
+  document.getElementById('mobileMenu').classList.toggle('hidden');
+});
+
+// ==================== 渲染时间线 ====================
+function renderTimeline() {
+  const container = document.getElementById('timelineContainer');
+  if (container.dataset.loaded === 'true') return;
+  
+  let html = '';
+  
+  eras.forEach(era => {
+    const eraEvents = events.filter(e => e.era === era.id);
+    if (eraEvents.length === 0) return;
+    
+    html += `
+    <section id="${era.id}" class="era-section era-${era.id} relative py-20 md:py-32 overflow-hidden">
+      <!-- 科幻扫描线效果 (现代和当代) -->
+      ${era.id === 'modern' || era.id === 'contemporary' ? '<div class="scan-line"></div>' : ''}
+      
+      <!-- 时代标题 -->
+      <div class="max-w-6xl mx-auto px-4 mb-16 text-center relative z-10">
+        <div class="inline-block mb-4">
+          <div class="w-16 h-16 mx-auto rounded-full flex items-center justify-center text-3xl" style="background: ${era.color}30; color: ${era.color}">
+            <i class="fas ${era.icon}"></i>
+          </div>
+        </div>
+        <h2 class="font-display text-3xl md:text-5xl font-bold mb-4" style="color: ${era.color}">${era.name}</h2>
+        <p class="text-sm md:text-base opacity-60 mb-2">${era.period}</p>
+        <p class="text-sm md:text-base opacity-50 max-w-xl mx-auto">${era.desc}</p>
+      </div>
+      
+      <!-- 时间线轴 -->
+      <div class="relative max-w-5xl mx-auto px-4">
+        <div class="timeline-line"></div>
+        
+        <div class="space-y-12 md:space-y-16">
+    `;
+    
+    eraEvents.forEach((event, index) => {
+      const isLeft = index % 2 === 0;
+      const badgeClass = event.type === 'tech' ? 'badge-tech' : 
+                         event.type === 'science' ? 'badge-science' : 
+                         event.type === 'person' ? 'badge-person' : 
+                         event.type === 'war' ? 'badge-war' : 'badge-culture';
+      
+      html += `
+      <div class="event-item relative flex items-center" data-index="${events.indexOf(event)}">
+        <!-- 桌面端左右布局 -->
+        <div class="hidden md:flex ${isLeft ? 'w-1/2 pr-12 justify-end' : 'w-1/2 pl-12 justify-start'}">
+          <div class="glass-card rounded-2xl p-6 max-w-md cursor-pointer hover:border-white/30" onclick="showDetail(${events.indexOf(event)})">
+            <div class="flex items-center gap-3 mb-3">
+              <span class="${badgeClass}">${event.badge}</span>
+              <span class="text-xs opacity-50">${event.year}</span>
+            </div>
+            <h3 class="text-lg font-bold mb-2">${event.title}</h3>
+            <p class="text-sm opacity-70 line-clamp-2">${event.desc}</p>
+          </div>
+        </div>
+        
+        <!-- 时间线节点 -->
+        <div class="absolute left-1/2 transform -translate-x-1/2 w-4 h-4 rounded-full border-2 z-10 hidden md:block" 
+             style="background: ${era.color}; border-color: ${era.color}; box-shadow: 0 0 10px ${era.color}">
+        </div>
+        
+        <!-- 移动端布局 -->
+        <div class="md:hidden w-full pl-12">
+          <div class="glass-card rounded-xl p-4 cursor-pointer" onclick="showDetail(${events.indexOf(event)})">
+            <div class="flex items-center gap-2 mb-2">
+              <span class="${badgeClass} text-xs">${event.badge}</span>
+              <span class="text-xs opacity-50">${event.year}</span>
+            </div>
+            <h3 class="font-bold mb-1">${event.title}</h3>
+            <p class="text-sm opacity-70 line-clamp-2">${event.desc}</p>
+          </div>
+        </div>
+        
+        <!-- 移动端节点 -->
+        <div class="absolute left-5 w-3 h-3 rounded-full z-10 md:hidden" 
+             style="background: ${era.color}; box-shadow: 0 0 8px ${era.color}">
+        </div>
+        
+        <div class="${isLeft ? 'hidden md:block md:w-1/2' : 'hidden'}"></div>
+      </div>
+      `;
+    });
+    
+    html += `
+        </div>
+      </div>
+    </section>
+    `;
+  });
+  
+  container.innerHTML = html;
+  container.dataset.loaded = 'true';
+  
+  // 渲染侧边导航
+  renderSideNav();
+  
+  // 初始化滚动观察器
+  initScrollObserver();
+}
+
+// 渲染侧边导航
+function renderSideNav() {
+  const sideNav = document.getElementById('sideNav');
+  let html = '';
+  
+  eras.forEach(era => {
+    html += `
+    <a href="#${era.id}" class="w-3 h-3 rounded-full transition-all hover:scale-150 tooltip" 
+       style="background: ${era.color}50; border: 1px solid ${era.color}" 
+       data-tip="${era.name}">
+    </a>
+    `;
+  });
+  
+  sideNav.innerHTML = html;
+}
+
+// 显示详情
+function showDetail(index) {
+  const event = events[index];
+  const era = eras.find(e => e.id === event.era);
+  
+  const badgeClass = event.type === 'tech' ? 'badge-tech' : 
+                     event.type === 'science' ? 'badge-science' : 
+                     event.type === 'person' ? 'badge-person' : 
+                     event.type === 'war' ? 'badge-war' : 'badge-culture';
+  
+  const typeNames = {
+    tech: '技术发明',
+    science: '科学发现',
+    person: '人物',
+    culture: '文化事件',
+    war: '战争'
+  };
+  
+  const modalBody = document.getElementById('modalBody');
+  modalBody.innerHTML = `
+    <div class="mb-6">
+      <span class="${badgeClass}">${event.badge}</span>
+    </div>
+    <h2 class="text-2xl font-bold mb-2">${event.title}</h2>
+    <div class="flex flex-wrap gap-3 text-sm opacity-60 mb-4">
+      <span><i class="fas fa-calendar mr-1"></i>${event.year}</span>
+      <span><i class="fas fa-clock mr-1"></i>${era.name}</span>
+      <span><i class="fas fa-tag mr-1"></i>${typeNames[event.type]}</span>
+    </div>
+    <p class="text-base leading-relaxed opacity-80 mb-6">${event.desc}</p>
+    
+    ${event.detail ? `
+    <div class="bg-white/5 rounded-xl p-4 mb-6 border-l-4" style="border-color: ${era.color}">
+      <p class="text-sm opacity-70">${event.detail}</p>
+    </div>
+    ` : ''}
+    
+    <button onclick="closeModal()" class="w-full bg-white/10 hover:bg-white/20 rounded-xl py-3 transition-colors">
+      关闭
+    </button>
+  `;
+  
+  document.getElementById('detailModal').classList.add('active');
+}
+
+// 点击模态框外部关闭
+document.getElementById('detailModal').addEventListener('click', (e) => {
+  if (e.target.id === 'detailModal') {
+    closeModal();
+  }
+});
+
+// 键盘ESC关闭
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') closeModal();
+});
+
+// ==================== 动画与效果 ====================
+
+// 粒子背景
+function initParticles() {
+  const canvas = document.getElementById('bgCanvas');
+  const ctx = canvas.getContext('2d');
+  let particles = [];
+  
+  function resize() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+  }
+  
+  function createParticle() {
+    return {
+      x: Math.random() * canvas.width,
+      y: Math.random() * canvas.height,
+      size: Math.random() * 2 + 0.5,
+      speedX: (Math.random() - 0.5) * 0.3,
+      speedY: (Math.random() - 0.5) * 0.3,
+      opacity: Math.random() * 0.5 + 0.2
+    };
+  }
+  
+  function init() {
+    particles = [];
+    for (let i = 0; i < 100; i++) {
+      particles.push(createParticle());
+    }
+  }
+  
+  function animate() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    
+    particles.forEach(p => {
+      p.x += p.speedX;
+      p.y += p.speedY;
+      
+      if (p.x < 0 || p.x > canvas.width) p.speedX *= -1;
+      if (p.y < 0 || p.y > canvas.height) p.speedY *= -1;
+      
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(255, 255, 255, ${p.opacity})`;
+      ctx.fill();
+    });
+    
+    // 连接近距离粒子
+    particles.forEach((p1, i) => {
+      particles.slice(i + 1).forEach(p2 => {
+        const dx = p1.x - p2.x;
+        const dy = p1.y - p2.y;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+        
+        if (dist < 100) {
+          ctx.beginPath();
+          ctx.moveTo(p1.x, p1.y);
+          ctx.lineTo(p2.x, p2.y);
+          ctx.strokeStyle = `rgba(255, 255, 255, ${0.1 * (1 - dist / 100)})`;
+          ctx.stroke();
+        }
+      });
+    });
+    
+    requestAnimationFrame(animate);
+  }
+  
+  resize();
+  init();
+  animate();
+  
+  window.addEventListener('resize', () => {
+    resize();
+    init();
+  });
+}
+
+// 滚动观察器
+function initScrollObserver() {
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.style.opacity = '1';
+        entry.target.style.transform = 'translateY(0)';
+      }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+  
+  document.querySelectorAll('.event-item').forEach(item => {
+    item.style.opacity = '0';
+    item.style.transform = 'translateY(30px)';
+    item.style.transition = 'all 0.6s cubic-bezier(0.16, 1, 0.3, 1)';
+    observer.observe(item);
+  });
+}
+
+// 滚动进度条
+window.addEventListener('scroll', () => {
+  const scrollTop = window.scrollY;
+  const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+  const progress = (scrollTop / docHeight) * 100;
+  
+  // 可以添加进度条显示
+});
+</script>
+
+</body>
+</html>
